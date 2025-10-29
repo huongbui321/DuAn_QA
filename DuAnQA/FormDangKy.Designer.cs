@@ -31,14 +31,14 @@
             label1 = new Label();
             lblTenDN = new Label();
             lblMatKhau = new Label();
-            lblHoTen = new Label();
             lblEmail = new Label();
             txtTenDN = new TextBox();
             txtMatKhau = new TextBox();
-            txtHoTen = new TextBox();
             txtEmail = new TextBox();
             btnDangKy = new Button();
             btnQuayLai = new Button();
+            panel1 = new Panel();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -47,7 +47,7 @@
             label1.Font = new Font("Segoe UI Black", 16F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.ControlText;
             label1.ImageAlign = ContentAlignment.MiddleRight;
-            label1.Location = new Point(352, 28);
+            label1.Location = new Point(214, 11);
             label1.Name = "label1";
             label1.Size = new Size(169, 45);
             label1.TabIndex = 0;
@@ -56,7 +56,7 @@
             // lblTenDN
             // 
             lblTenDN.AutoSize = true;
-            lblTenDN.Location = new Point(141, 94);
+            lblTenDN.Location = new Point(58, 75);
             lblTenDN.Name = "lblTenDN";
             lblTenDN.Size = new Size(138, 25);
             lblTenDN.TabIndex = 1;
@@ -65,26 +65,16 @@
             // lblMatKhau
             // 
             lblMatKhau.AutoSize = true;
-            lblMatKhau.Location = new Point(141, 166);
+            lblMatKhau.Location = new Point(58, 141);
             lblMatKhau.Name = "lblMatKhau";
             lblMatKhau.Size = new Size(95, 25);
             lblMatKhau.TabIndex = 2;
             lblMatKhau.Text = "Mật khẩu :";
             // 
-            // lblHoTen
-            // 
-            lblHoTen.AutoSize = true;
-            lblHoTen.Location = new Point(141, 237);
-            lblHoTen.Name = "lblHoTen";
-            lblHoTen.Size = new Size(75, 25);
-            lblHoTen.TabIndex = 3;
-            lblHoTen.Text = "Họ tên :";
-            lblHoTen.Click += lblHoTen_Click;
-            // 
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(141, 301);
+            lblEmail.Location = new Point(58, 220);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(63, 25);
             lblEmail.TabIndex = 4;
@@ -92,70 +82,75 @@
             // 
             // txtTenDN
             // 
-            txtTenDN.Location = new Point(364, 94);
+            txtTenDN.Location = new Point(281, 83);
             txtTenDN.Name = "txtTenDN";
             txtTenDN.Size = new Size(223, 31);
             txtTenDN.TabIndex = 5;
             // 
             // txtMatKhau
             // 
-            txtMatKhau.Location = new Point(364, 166);
+            txtMatKhau.Location = new Point(281, 149);
             txtMatKhau.Name = "txtMatKhau";
             txtMatKhau.Size = new Size(223, 31);
             txtMatKhau.TabIndex = 6;
             // 
-            // txtHoTen
-            // 
-            txtHoTen.Location = new Point(364, 237);
-            txtHoTen.Name = "txtHoTen";
-            txtHoTen.Size = new Size(223, 31);
-            txtHoTen.TabIndex = 7;
-            // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(364, 301);
+            txtEmail.Location = new Point(281, 220);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(223, 31);
             txtEmail.TabIndex = 8;
             // 
             // btnDangKy
             // 
-            btnDangKy.Location = new Point(211, 385);
+            btnDangKy.Location = new Point(128, 366);
             btnDangKy.Name = "btnDangKy";
             btnDangKy.Size = new Size(112, 34);
             btnDangKy.TabIndex = 9;
             btnDangKy.Text = "Đăng Ký";
             btnDangKy.UseVisualStyleBackColor = true;
+            btnDangKy.Click += btnDangKy_Click;
             // 
             // btnQuayLai
             // 
-            btnQuayLai.Location = new Point(475, 383);
+            btnQuayLai.Location = new Point(392, 364);
             btnQuayLai.Name = "btnQuayLai";
             btnQuayLai.Size = new Size(112, 34);
             btnQuayLai.TabIndex = 10;
             btnQuayLai.Text = "Quay lại";
             btnQuayLai.UseVisualStyleBackColor = true;
+            btnQuayLai.Click += btnQuayLai_Click;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.LavenderBlush;
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(btnQuayLai);
+            panel1.Controls.Add(lblTenDN);
+            panel1.Controls.Add(btnDangKy);
+            panel1.Controls.Add(lblMatKhau);
+            panel1.Controls.Add(txtEmail);
+            panel1.Controls.Add(lblEmail);
+            panel1.Controls.Add(txtMatKhau);
+            panel1.Controls.Add(txtTenDN);
+            panel1.Location = new Point(285, 54);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(590, 430);
+            panel1.TabIndex = 11;
+            panel1.Paint += panel1_Paint;
             // 
             // FormDangKy
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(btnQuayLai);
-            Controls.Add(btnDangKy);
-            Controls.Add(txtEmail);
-            Controls.Add(txtHoTen);
-            Controls.Add(txtMatKhau);
-            Controls.Add(txtTenDN);
-            Controls.Add(lblEmail);
-            Controls.Add(lblHoTen);
-            Controls.Add(lblMatKhau);
-            Controls.Add(lblTenDN);
-            Controls.Add(label1);
+            BackColor = Color.AliceBlue;
+            ClientSize = new Size(1168, 541);
+            Controls.Add(panel1);
             Name = "FormDangKy";
             Text = "FormDangKy";
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -163,13 +158,12 @@
         private Label label1;
         private Label lblTenDN;
         private Label lblMatKhau;
-        private Label lblHoTen;
         private Label lblEmail;
         private TextBox txtTenDN;
         private TextBox txtMatKhau;
-        private TextBox txtHoTen;
         private TextBox txtEmail;
         private Button btnDangKy;
         private Button btnQuayLai;
+        private Panel panel1;
     }
 }

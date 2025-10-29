@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Data;
 using Microsoft.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DuAnQA
 {
     internal class KetNoi
     {
-        // 🔹 Khai báo chuỗi kết nối (connection string)
+        // 🔹 Chuỗi kết nối
         private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=HuongieClothes;Integrated Security=True";
 
-        // 🔹 Tạo đối tượng kết nối
+        // 🔹 Đối tượng kết nối
         public SqlConnection conn;
 
         // 🔹 Hàm khởi tạo
@@ -25,20 +21,96 @@ namespace DuAnQA
         // 🔹 Hàm mở kết nối
         public void MoKetNoi()
         {
-            if (conn.State == System.Data.ConnectionState.Closed)
-            {
+            if (conn.State == ConnectionState.Closed)
                 conn.Open();
-            }
         }
 
         // 🔹 Hàm đóng kết nối
         public void DongKetNoi()
         {
-            if (conn.State == System.Data.ConnectionState.Open)
-            {
+            if (conn.State == ConnectionState.Open)
                 conn.Close();
+        }
+
+        // ✅ 1️⃣ Hàm đếm số dòng (SELECT COUNT(*))
+        public int DemDong(string sql, params SqlParameter[] ts)
+        {
+            int kq = 0;
+            try
+            {
+                MoKetNoi();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    if (ts != null)
+                        cmd.Parameters.AddRange(ts);
+
+                    kq = Convert.ToInt32(cmd.ExecuteScalar());
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi DemDong: " + ex.Message);
+            }
+            finally
+            {
+                DongKetNoi();
+            }
+            return kq;
+        }
+
+        // ✅ 2️⃣ Hàm thực thi INSERT, UPDATE, DELETE
+        public int ThucThi(string sql, params SqlParameter[] ts)
+        {
+            int kq = 0;
+            try
+            {
+                MoKetNoi();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    if (ts != null)
+                        cmd.Parameters.AddRange(ts);
+
+                    kq = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi ThucThi: " + ex.Message);
+            }
+            finally
+            {
+                DongKetNoi();
+            }
+            return kq;
+        }
+
+        // ✅ 3️⃣ Hàm lấy dữ liệu SELECT trả về DataTable
+        public DataTable LayDuLieu(string sql, params SqlParameter[] ts)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                MoKetNoi();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    if (ts != null)
+                        cmd.Parameters.AddRange(ts);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi LayDuLieu: " + ex.Message);
+            }
+            finally
+            {
+                DongKetNoi();
+            }
+            return dt;
         }
     }
 }
-   

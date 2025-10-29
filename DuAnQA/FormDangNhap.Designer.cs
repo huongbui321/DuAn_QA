@@ -35,7 +35,7 @@
             label1 = new Label();
             btnDangNhap = new Button();
             linkQuenMK = new LinkLabel();
-            lnkDangKy = new LinkLabel();
+            linkDangKy = new LinkLabel();
             panel1 = new Panel();
             btnMat = new Button();
             label4 = new Label();
@@ -48,7 +48,7 @@
             label2.BackColor = Color.LavenderBlush;
             label2.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = Color.DarkSlateGray;
-            label2.Location = new Point(310, 185);
+            label2.Location = new Point(310, 179);
             label2.Name = "label2";
             label2.Size = new Size(111, 30);
             label2.TabIndex = 1;
@@ -60,7 +60,7 @@
             label3.BackColor = Color.LavenderBlush;
             label3.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
             label3.ForeColor = Color.DarkSlateGray;
-            label3.Location = new Point(310, 306);
+            label3.Location = new Point(310, 300);
             label3.Name = "label3";
             label3.Size = new Size(111, 30);
             label3.TabIndex = 2;
@@ -68,16 +68,15 @@
             // 
             // txtTenDN
             // 
-            txtTenDN.Location = new Point(310, 237);
+            txtTenDN.Location = new Point(310, 231);
             txtTenDN.Name = "txtTenDN";
             txtTenDN.Size = new Size(549, 31);
             txtTenDN.TabIndex = 3;
             // 
             // txtMatKhau
             // 
-            txtMatKhau.Location = new Point(310, 358);
+            txtMatKhau.Location = new Point(310, 352);
             txtMatKhau.Name = "txtMatKhau";
-            txtMatKhau.PasswordChar = '*';
             txtMatKhau.Size = new Size(549, 31);
             txtMatKhau.TabIndex = 4;
             // 
@@ -120,17 +119,18 @@
             linkQuenMK.Text = "Quên mật khẩu?";
             linkQuenMK.LinkClicked += linkQuenMK_LinkClicked_1;
             // 
-            // lnkDangKy
+            // linkDangKy
             // 
-            lnkDangKy.AutoSize = true;
-            lnkDangKy.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            lnkDangKy.LinkColor = Color.Black;
-            lnkDangKy.Location = new Point(414, 442);
-            lnkDangKy.Name = "lnkDangKy";
-            lnkDangKy.Size = new Size(79, 25);
-            lnkDangKy.TabIndex = 3;
-            lnkDangKy.TabStop = true;
-            lnkDangKy.Text = "Đăng ký";
+            linkDangKy.AutoSize = true;
+            linkDangKy.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            linkDangKy.LinkColor = Color.Black;
+            linkDangKy.Location = new Point(414, 442);
+            linkDangKy.Name = "linkDangKy";
+            linkDangKy.Size = new Size(79, 25);
+            linkDangKy.TabIndex = 3;
+            linkDangKy.TabStop = true;
+            linkDangKy.Text = "Đăng ký";
+            linkDangKy.LinkClicked += linkDangKy_LinkClicked;
             // 
             // panel1
             // 
@@ -138,23 +138,24 @@
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(btnMat);
             panel1.Controls.Add(label4);
-            panel1.Controls.Add(lnkDangKy);
+            panel1.Controls.Add(linkDangKy);
             panel1.Controls.Add(linkQuenMK);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(btnDangNhap);
-            panel1.Location = new Point(255, 55);
+            panel1.Location = new Point(240, 42);
             panel1.Name = "panel1";
             panel1.Size = new Size(693, 501);
             panel1.TabIndex = 5;
             // 
             // btnMat
             // 
-            btnMat.Location = new Point(609, 300);
+            btnMat.Location = new Point(624, 307);
             btnMat.Name = "btnMat";
             btnMat.Size = new Size(48, 34);
             btnMat.TabIndex = 5;
             btnMat.Text = "👁️";
             btnMat.UseVisualStyleBackColor = true;
+            btnMat.Click += btnMat_Click_1;
             // 
             // label4
             // 
@@ -171,7 +172,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
-            ClientSize = new Size(1164, 618);
+            ClientSize = new Size(1166, 570);
             Controls.Add(txtMatKhau);
             Controls.Add(txtTenDN);
             Controls.Add(label3);
@@ -195,7 +196,7 @@
         private Label label1;
         private Button btnDangNhap;
         private LinkLabel linkQuenMK;
-        private LinkLabel lnkDangKy;
+        private LinkLabel linkDangKy;
         private Panel panel1;
         private Label label4;
         private Button btnMat;

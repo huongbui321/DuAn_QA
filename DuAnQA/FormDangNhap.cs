@@ -46,7 +46,7 @@ namespace DuAnQA
                 KetNoi kn = new KetNoi();
                 kn.MoKetNoi();
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM TaiKhoan WHERE TenDN=@user AND MatKhau=@pass", kn.conn);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM NguoiDung WHERE TenDangNhap=@user AND MatKhau=@pass", kn.conn);
                 cmd.Parameters.AddWithValue("@user", txtTenDN.Text);
                 cmd.Parameters.AddWithValue("@pass", txtMatKhau.Text);
 
@@ -54,6 +54,10 @@ namespace DuAnQA
                 if (dr.Read())
                 {
                     MessageBox.Show("Đăng nhập thành công!");
+                    FormTrangChu kh = new FormTrangChu();
+                    kh.Show();
+                    this.Hide();
+                    return;
                 }
                 else
                 {
@@ -100,6 +104,34 @@ namespace DuAnQA
             FormQuenMK fQuenMK = new FormQuenMK(); // Tạo form quên mật khẩu
             fQuenMK.Show();                        // Hiển thị form quên mật khẩu
             this.Hide();
+            fQuenMK.FormClosed += (s, args) => this.Show();
         }
+
+        private void btnMat_Click_1(object sender, EventArgs e)
+        {
+            // Nếu đang hiển thị mật khẩu → ẩn đi
+            if (hienMatKhau)
+            {
+                txtMatKhau.UseSystemPasswordChar = true;
+                btnMat.Text = "👁"; // đổi icon về mắt thường
+                hienMatKhau = false;
+            }
+            else // Nếu đang ẩn → hiện mật khẩu
+            {
+                txtMatKhau.UseSystemPasswordChar = false;
+                btnMat.Text = "🙈"; // đổi icon sang mắt nhắm (hoặc chữ khác nếu bạn thích)
+                hienMatKhau = true;
+            }
+        }
+
+        private void linkDangKy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            FormDangKy fDangKy = new FormDangKy();
+            fDangKy.Show();
+            this.Hide();
+            fDangKy.FormClosed += (s, args) =>this.Show();
+        }
+
+       
     }
 }
