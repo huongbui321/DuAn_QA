@@ -112,5 +112,32 @@ namespace DuAnQA
             }
             return dt;
         }
-    }
+        public List<SanPham> LayDanhSachSanPham()
+        {
+            List<SanPham> ds = new List<SanPham>();
+            MoKetNoi();
+
+            string sql = "SELECT * FROM SanPham";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                SanPham sp = new SanPham();
+                sp.MaSanPham = Convert.ToInt32(reader["MaSanPham"]);
+                sp.TenSanPham = reader["TenSanPham"].ToString();
+                sp.MoTa = reader["MoTa"].ToString();
+                sp.Gia = Convert.ToDecimal(reader["Gia"]);
+                sp.SoLuong = Convert.ToInt32(reader["SoLuong"]);
+                sp.HinhAnh = reader["HinhAnh"].ToString();
+
+                ds.Add(sp);
+            }
+
+            reader.Close();
+            DongKetNoi();
+            return ds;
+        }
+    
+}
 }

@@ -84,11 +84,11 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Snap ITC", 16F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.ForeColor = Color.DarkCyan;
-            label1.Location = new Point(107, 41);
+            label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.SteelBlue;
+            label1.Location = new Point(128, 49);
             label1.Name = "label1";
-            label1.Size = new Size(492, 42);
+            label1.Size = new Size(450, 45);
             label1.TabIndex = 0;
             label1.Text = "Huongie clothes xin chào!";
             // 
