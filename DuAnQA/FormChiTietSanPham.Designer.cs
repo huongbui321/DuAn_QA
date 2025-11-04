@@ -61,7 +61,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 24F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            label1.ForeColor = Color.SteelBlue;
+            label1.ForeColor = Color.PaleVioletRed;
             label1.Location = new Point(451, 33);
             label1.Name = "label1";
             label1.Size = new Size(402, 54);
@@ -116,7 +116,6 @@
             // cboSize
             // 
             cboSize.FormattingEnabled = true;
-            cboSize.Items.AddRange(new object[] { "S", "M", "L" });
             cboSize.Location = new Point(708, 391);
             cboSize.Name = "cboSize";
             cboSize.Size = new Size(304, 33);
@@ -158,22 +157,24 @@
             // 
             // btnThemGioHang
             // 
+            btnThemGioHang.BackColor = Color.LavenderBlush;
             btnThemGioHang.Location = new Point(509, 481);
             btnThemGioHang.Name = "btnThemGioHang";
             btnThemGioHang.Size = new Size(184, 34);
             btnThemGioHang.TabIndex = 12;
             btnThemGioHang.Text = "Thêm vào giỏ hàng";
-            btnThemGioHang.UseVisualStyleBackColor = true;
+            btnThemGioHang.UseVisualStyleBackColor = false;
             btnThemGioHang.Click += btnThemGioHang_Click;
             // 
             // btnMuaNgay
             // 
+            btnMuaNgay.BackColor = Color.LavenderBlush;
             btnMuaNgay.Location = new Point(771, 481);
             btnMuaNgay.Name = "btnMuaNgay";
             btnMuaNgay.Size = new Size(121, 34);
             btnMuaNgay.TabIndex = 13;
             btnMuaNgay.Text = "Mua ngay";
-            btnMuaNgay.UseVisualStyleBackColor = true;
+            btnMuaNgay.UseVisualStyleBackColor = false;
             btnMuaNgay.Click += btnMuaNgay_Click;
             // 
             // lblSoLuong
@@ -187,19 +188,20 @@
             // 
             // btnQuayLai
             // 
+            btnQuayLai.BackColor = Color.LavenderBlush;
             btnQuayLai.Location = new Point(971, 481);
             btnQuayLai.Name = "btnQuayLai";
             btnQuayLai.Size = new Size(112, 34);
             btnQuayLai.TabIndex = 15;
             btnQuayLai.Text = "Quay lại";
-            btnQuayLai.UseVisualStyleBackColor = true;
+            btnQuayLai.UseVisualStyleBackColor = false;
             btnQuayLai.Click += button1_Click;
             // 
             // FormChiTietSanPham
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.LavenderBlush;
+            BackColor = Color.AliceBlue;
             ClientSize = new Size(1211, 591);
             Controls.Add(btnQuayLai);
             Controls.Add(lblSoLuong);

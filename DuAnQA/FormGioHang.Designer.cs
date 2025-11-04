@@ -28,49 +28,101 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            label1 = new Label();
+            lblTongTien = new Label();
+            btnThanhToan = new Button();
+            sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
+            btnQuayLai = new Button();
+            sqlCommand2 = new Microsoft.Data.SqlClient.SqlCommand();
+            flowGioHang = new FlowLayoutPanel();
             SuspendLayout();
             // 
-            // dataGridView1
+            // label1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(315, 33);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.RowTemplate.Height = 33;
-            dataGridView1.Size = new Size(649, 240);
-            dataGridView1.TabIndex = 0;
+            label1.AutoSize = true;
+            label1.BackColor = Color.AliceBlue;
+            label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.PaleVioletRed;
+            label1.Location = new Point(426, 62);
+            label1.Name = "label1";
+            label1.Size = new Size(359, 45);
+            label1.TabIndex = 1;
+            label1.Text = "Giỏ hàng của bạn\U0001f6d2";
             // 
-            // pictureBox1
+            // lblTongTien
             // 
-            pictureBox1.Image = Properties.Resources.anh_thieplogo;
-            pictureBox1.Location = new Point(12, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(255, 163);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
+            lblTongTien.AutoSize = true;
+            lblTongTien.Location = new Point(543, 458);
+            lblTongTien.Name = "lblTongTien";
+            lblTongTien.Size = new Size(0, 25);
+            lblTongTien.TabIndex = 2;
+            // 
+            // btnThanhToan
+            // 
+            btnThanhToan.Location = new Point(692, 520);
+            btnThanhToan.Name = "btnThanhToan";
+            btnThanhToan.Size = new Size(112, 34);
+            btnThanhToan.TabIndex = 3;
+            btnThanhToan.Text = "Thanh toán";
+            btnThanhToan.UseVisualStyleBackColor = true;
+            btnThanhToan.Click += btnThanhToan_Click;
+            // 
+            // sqlCommand1
+            // 
+            sqlCommand1.CommandTimeout = 30;
+            sqlCommand1.Connection = null;
+            sqlCommand1.Notification = null;
+            sqlCommand1.Transaction = null;
+            // 
+            // btnQuayLai
+            // 
+            btnQuayLai.Location = new Point(382, 520);
+            btnQuayLai.Name = "btnQuayLai";
+            btnQuayLai.Size = new Size(112, 34);
+            btnQuayLai.TabIndex = 4;
+            btnQuayLai.Text = "Quay lại ";
+            btnQuayLai.UseVisualStyleBackColor = true;
+            btnQuayLai.Click += btnQuayLai_Click;
+            // 
+            // sqlCommand2
+            // 
+            sqlCommand2.CommandTimeout = 30;
+            sqlCommand2.Connection = null;
+            sqlCommand2.Notification = null;
+            sqlCommand2.Transaction = null;
+            // 
+            // flowGioHang
+            // 
+            flowGioHang.Location = new Point(85, 150);
+            flowGioHang.Name = "flowGioHang";
+            flowGioHang.Size = new Size(1032, 288);
+            flowGioHang.TabIndex = 5;
             // 
             // FormGioHang
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1204, 596);
-            Controls.Add(pictureBox1);
-            Controls.Add(dataGridView1);
+            BackColor = Color.AliceBlue;
+            ClientSize = new Size(1203, 664);
+            Controls.Add(flowGioHang);
+            Controls.Add(btnQuayLai);
+            Controls.Add(btnThanhToan);
+            Controls.Add(lblTongTien);
+            Controls.Add(label1);
             Name = "FormGioHang";
             Text = "FormGioHang";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            Load += FormGioHang_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
-        private PictureBox pictureBox1;
+        private Label label1;
+        private Label lblTongTien;
+        private Button btnThanhToan;
+        private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
+        private Button btnQuayLai;
+        private Microsoft.Data.SqlClient.SqlCommand sqlCommand2;
+        private FlowLayoutPanel flowGioHang;
     }
 }

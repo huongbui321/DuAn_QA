@@ -46,19 +46,28 @@ namespace DuAnQA
         private void btnThemGioHang_Click(object sender, EventArgs e)
         {
             MessageBox.Show($"{sp.TenSanPham} đã được thêm vào giỏ hàng!");
-            // Tạo đối tượng GioHang từ sản phẩm đang xem
-            GioHang item = new GioHang
+            var spTonTai = StaticData.DanhSachGioHang
+       .FirstOrDefault(x => x.TenSP == sp.TenSanPham && x.Size == cboSize.Text);
+
+            if (spTonTai != null)
             {
-                TenSP = sp.TenSanPham,
-                Gia = sp.Gia,
-                SoLuong = (int)numSoLuongMua.Value,
-                Size = cboSize.Text
-            };
+                spTonTai.SoLuong += (int)numSoLuongMua.Value;
+            }
+            else
+            {
+                // Nếu chưa có thì thêm mới
+                GioHang item = new GioHang
+                {
+                    TenSP = sp.TenSanPham,
+                    Gia = sp.Gia,
+                    SoLuong = (int)numSoLuongMua.Value,
+                    Size = cboSize.Text,
+                    HinhAnh = sp.HinhAnh
+                };
+                StaticData.DanhSachGioHang.Add(item);
+            }
 
-            // Thêm vào danh sách dùng chung
-            StaticData.GioHangList.Add(item);
 
-            
         }
 
         private void button1_Click(object sender, EventArgs e)

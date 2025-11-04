@@ -45,9 +45,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.SteelBlue;
+            label1.ForeColor = Color.HotPink;
             label1.ImageAlign = ContentAlignment.MiddleRight;
-            label1.Location = new Point(379, 44);
+            label1.Location = new Point(430, 44);
             label1.Name = "label1";
             label1.Size = new Size(360, 45);
             label1.TabIndex = 0;
@@ -56,7 +56,7 @@
             // lblTenDN
             // 
             lblTenDN.AutoSize = true;
-            lblTenDN.Location = new Point(67, 130);
+            lblTenDN.Location = new Point(135, 165);
             lblTenDN.Name = "lblTenDN";
             lblTenDN.Size = new Size(134, 25);
             lblTenDN.TabIndex = 1;
@@ -65,7 +65,7 @@
             // lblMatKhau
             // 
             lblMatKhau.AutoSize = true;
-            lblMatKhau.Location = new Point(67, 256);
+            lblMatKhau.Location = new Point(135, 291);
             lblMatKhau.Name = "lblMatKhau";
             lblMatKhau.Size = new Size(95, 25);
             lblMatKhau.TabIndex = 2;
@@ -74,7 +74,7 @@
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(67, 375);
+            lblEmail.Location = new Point(135, 410);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(63, 25);
             lblEmail.TabIndex = 4;
@@ -82,28 +82,28 @@
             // 
             // txtTenDN
             // 
-            txtTenDN.Location = new Point(67, 174);
+            txtTenDN.Location = new Point(135, 209);
             txtTenDN.Name = "txtTenDN";
             txtTenDN.Size = new Size(407, 31);
             txtTenDN.TabIndex = 5;
             // 
             // txtMatKhau
             // 
-            txtMatKhau.Location = new Point(67, 294);
+            txtMatKhau.Location = new Point(135, 329);
             txtMatKhau.Name = "txtMatKhau";
             txtMatKhau.Size = new Size(407, 31);
             txtMatKhau.TabIndex = 6;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(67, 414);
+            txtEmail.Location = new Point(135, 449);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(407, 31);
             txtEmail.TabIndex = 8;
             // 
             // btnDangKy
             // 
-            btnDangKy.Location = new Point(89, 474);
+            btnDangKy.Location = new Point(157, 509);
             btnDangKy.Name = "btnDangKy";
             btnDangKy.Size = new Size(112, 34);
             btnDangKy.TabIndex = 9;
@@ -113,7 +113,7 @@
             // 
             // btnQuayLai
             // 
-            btnQuayLai.Location = new Point(362, 474);
+            btnQuayLai.Location = new Point(430, 509);
             btnQuayLai.Name = "btnQuayLai";
             btnQuayLai.Size = new Size(112, 34);
             btnQuayLai.TabIndex = 10;
@@ -124,7 +124,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.logo;
-            pictureBox1.Location = new Point(605, 174);
+            pictureBox1.Location = new Point(673, 209);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(387, 271);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -136,7 +136,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
-            ClientSize = new Size(1168, 541);
+            ClientSize = new Size(1203, 664);
             Controls.Add(pictureBox1);
             Controls.Add(btnQuayLai);
             Controls.Add(label1);

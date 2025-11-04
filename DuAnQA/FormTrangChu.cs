@@ -133,6 +133,13 @@ namespace DuAnQA
                 f.ShowDialog(this);
             }
         }
+
+        private void picGioHang_Click(object sender, EventArgs e)
+        {
+            FormGioHang f = new FormGioHang();
+            f.StartPosition = FormStartPosition.CenterParent;
+            f.ShowDialog();
+        }
     }
 }
 

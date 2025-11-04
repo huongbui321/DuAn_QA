@@ -9,8 +9,8 @@ namespace DuAnQA
     internal class StaticData
     {
 
-            // Danh sách giỏ hàng chia sẻ (khởi tạo rỗng)
-            public static List<GioHang> GioHangList { get; } = new List<GioHang>();
-        
+        // Danh sách giỏ hàng chia sẻ (khởi tạo rỗng)
+        public static List<GioHang> DanhSachGioHang = new List<GioHang>();
+
     }
 }

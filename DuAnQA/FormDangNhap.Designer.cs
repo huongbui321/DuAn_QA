@@ -48,7 +48,7 @@
             label2.BackColor = Color.LavenderBlush;
             label2.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = Color.DarkSlateGray;
-            label2.Location = new Point(310, 179);
+            label2.Location = new Point(46, 130);
             label2.Name = "label2";
             label2.Size = new Size(111, 30);
             label2.TabIndex = 1;
@@ -60,7 +60,7 @@
             label3.BackColor = Color.LavenderBlush;
             label3.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
             label3.ForeColor = Color.DarkSlateGray;
-            label3.Location = new Point(310, 300);
+            label3.Location = new Point(46, 262);
             label3.Name = "label3";
             label3.Size = new Size(111, 30);
             label3.TabIndex = 2;
@@ -68,14 +68,14 @@
             // 
             // txtTenDN
             // 
-            txtTenDN.Location = new Point(310, 231);
+            txtTenDN.Location = new Point(46, 176);
             txtTenDN.Name = "txtTenDN";
             txtTenDN.Size = new Size(549, 31);
             txtTenDN.TabIndex = 3;
             // 
             // txtMatKhau
             // 
-            txtMatKhau.Location = new Point(310, 352);
+            txtMatKhau.Location = new Point(46, 307);
             txtMatKhau.Name = "txtMatKhau";
             txtMatKhau.Size = new Size(549, 31);
             txtMatKhau.TabIndex = 4;
@@ -85,7 +85,7 @@
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
             label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.SteelBlue;
+            label1.ForeColor = Color.PaleVioletRed;
             label1.Location = new Point(128, 49);
             label1.Name = "label1";
             label1.Size = new Size(450, 45);
@@ -94,7 +94,7 @@
             // 
             // btnDangNhap
             // 
-            btnDangNhap.BackColor = Color.White;
+            btnDangNhap.BackColor = Color.LavenderBlush;
             btnDangNhap.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
             btnDangNhap.ForeColor = Color.Black;
             btnDangNhap.Location = new Point(296, 394);
@@ -136,20 +136,24 @@
             // 
             panel1.BackColor = Color.LavenderBlush;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(txtTenDN);
+            panel1.Controls.Add(txtMatKhau);
+            panel1.Controls.Add(label3);
             panel1.Controls.Add(btnMat);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(linkDangKy);
             panel1.Controls.Add(linkQuenMK);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(btnDangNhap);
-            panel1.Location = new Point(240, 42);
+            panel1.Location = new Point(264, 83);
             panel1.Name = "panel1";
             panel1.Size = new Size(693, 501);
             panel1.TabIndex = 5;
             // 
             // btnMat
             // 
-            btnMat.Location = new Point(624, 307);
+            btnMat.Location = new Point(601, 307);
             btnMat.Name = "btnMat";
             btnMat.Size = new Size(48, 34);
             btnMat.TabIndex = 5;
@@ -172,11 +176,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
-            ClientSize = new Size(1166, 570);
-            Controls.Add(txtMatKhau);
-            Controls.Add(txtTenDN);
-            Controls.Add(label3);
-            Controls.Add(label2);
+            ClientSize = new Size(1203, 664);
             Controls.Add(panel1);
             Name = "FormDangNhap";
             StartPosition = FormStartPosition.CenterScreen;
@@ -185,7 +185,6 @@
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion

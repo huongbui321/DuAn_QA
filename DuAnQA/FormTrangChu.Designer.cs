@@ -113,6 +113,7 @@
             picGioHang.SizeMode = PictureBoxSizeMode.StretchImage;
             picGioHang.TabIndex = 4;
             picGioHang.TabStop = false;
+            picGioHang.Click += picGioHang_Click;
             // 
             // textBox1
             // 
@@ -161,7 +162,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
-            ClientSize = new Size(1208, 580);
+            ClientSize = new Size(1203, 664);
             Controls.Add(panel1);
             Controls.Add(flowSanPham);
             Name = "FormTrangChu";
