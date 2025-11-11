@@ -35,10 +35,12 @@
             label2 = new Label();
             button1 = new Button();
             picGioHang = new PictureBox();
-            textBox1 = new TextBox();
+            txtTK = new TextBox();
             label1 = new Label();
             flowSanPham = new FlowLayoutPanel();
             panel1 = new Panel();
+            btnTK = new Button();
+            flpDanhMuc = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -96,7 +98,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(1016, 71);
+            button1.Location = new Point(1081, 87);
             button1.Name = "button1";
             button1.Size = new Size(107, 34);
             button1.TabIndex = 5;
@@ -107,20 +109,20 @@
             // 
             picGioHang.BorderStyle = BorderStyle.FixedSingle;
             picGioHang.Image = Properties.Resources.giohang;
-            picGioHang.Location = new Point(906, 75);
+            picGioHang.Location = new Point(962, 74);
             picGioHang.Name = "picGioHang";
-            picGioHang.Size = new Size(47, 32);
+            picGioHang.Size = new Size(46, 33);
             picGioHang.SizeMode = PictureBoxSizeMode.StretchImage;
             picGioHang.TabIndex = 4;
             picGioHang.TabStop = false;
             picGioHang.Click += picGioHang_Click;
             // 
-            // textBox1
+            // txtTK
             // 
-            textBox1.Location = new Point(377, 76);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(508, 31);
-            textBox1.TabIndex = 3;
+            txtTK.Location = new Point(377, 76);
+            txtTK.Name = "txtTK";
+            txtTK.Size = new Size(508, 31);
+            txtTK.TabIndex = 3;
             // 
             // label1
             // 
@@ -134,21 +136,22 @@
             // flowSanPham
             // 
             flowSanPham.AutoScroll = true;
-            flowSanPham.Location = new Point(3, 144);
+            flowSanPham.Location = new Point(223, 144);
             flowSanPham.Name = "flowSanPham";
-            flowSanPham.Size = new Size(1190, 424);
+            flowSanPham.Size = new Size(970, 473);
             flowSanPham.TabIndex = 3;
             // 
             // panel1
             // 
             panel1.BackColor = Color.LavenderBlush;
+            panel1.Controls.Add(btnTK);
             panel1.Controls.Add(pictureBox4);
             panel1.Controls.Add(pictureBox3);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(picGioHang);
-            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(txtTK);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(3, 3);
@@ -157,12 +160,33 @@
             panel1.TabIndex = 2;
             panel1.Paint += panel1_Paint;
             // 
+            // btnTK
+            // 
+            btnTK.Location = new Point(900, 74);
+            btnTK.Name = "btnTK";
+            btnTK.Size = new Size(43, 34);
+            btnTK.TabIndex = 10;
+            btnTK.Text = "🔍";
+            btnTK.UseVisualStyleBackColor = true;
+            btnTK.Click += btnTK_Click;
+            // 
+            // flpDanhMuc
+            // 
+            flpDanhMuc.AutoScroll = true;
+            flpDanhMuc.FlowDirection = FlowDirection.TopDown;
+            flpDanhMuc.Location = new Point(6, 144);
+            flpDanhMuc.Name = "flpDanhMuc";
+            flpDanhMuc.Size = new Size(215, 473);
+            flpDanhMuc.TabIndex = 4;
+            flpDanhMuc.Paint += flpDanhMuc_Paint;
+            // 
             // FormTrangChu
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
             ClientSize = new Size(1203, 664);
+            Controls.Add(flpDanhMuc);
             Controls.Add(panel1);
             Controls.Add(flowSanPham);
             Name = "FormTrangChu";
@@ -180,7 +204,7 @@
         #endregion
         private PictureBox pictureBox1;
         private PictureBox picGioHang;
-        private TextBox textBox1;
+        private TextBox txtTK;
         private Label label1;
         private Button button1;
         private Label label3;
@@ -189,5 +213,7 @@
         private PictureBox pictureBox3;
         private FlowLayoutPanel flowSanPham;
         private Panel panel1;
+        private Button btnTK;
+        private FlowLayoutPanel flpDanhMuc;
     }
 }

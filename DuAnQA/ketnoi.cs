@@ -112,6 +112,8 @@ namespace DuAnQA
             }
             return dt;
         }
+        // (Bên trong class KetNoi)
+
         public List<SanPham> LayDanhSachSanPham()
         {
             List<SanPham> ds = new List<SanPham>();
@@ -131,6 +133,18 @@ namespace DuAnQA
                 sp.SoLuong = Convert.ToInt32(reader["SoLuong"]);
                 sp.HinhAnh = reader["HinhAnh"].ToString();
 
+                // === DÒNG QUAN TRỌNG ĐÃ ĐƯỢC THÊM VÀO ===
+                // Kiểm tra xem nó có bị NULL trong CSDL không
+                if (reader["MaDanhMuc"] != DBNull.Value)
+                {
+                    sp.MaDanhMuc = reader["MaDanhMuc"].ToString();
+                }
+                else
+                {
+                    sp.MaDanhMuc = null; // Hoặc string.Empty
+                }
+                // ======================================
+
                 ds.Add(sp);
             }
 
@@ -138,6 +152,48 @@ namespace DuAnQA
             DongKetNoi();
             return ds;
         }
-    
-}
+        public DataTable LayTatCaDanhMuc()
+        {
+            string sql = "SELECT MaDanhMuc, TenDanhMuc FROM DanhMuc";
+
+            // Dùng chính hàm LayDuLieu có sẵn của bạn, rất gọn!
+            return LayDuLieu(sql);
+        }
+        public List<SanPham> LaySanPhamTheoDanhMuc(string maDanhMuc)
+        {
+            List<SanPham> ds = new List<SanPham>();
+            MoKetNoi();
+
+            string sql = "SELECT * FROM SanPham WHERE MaDanhMuc = @maDM";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+
+            // Thêm tham số để tránh lỗi SQL Injection
+            cmd.Parameters.AddWithValue("@maDM", maDanhMuc);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                SanPham sp = new SanPham();
+                sp.MaSanPham = Convert.ToInt32(reader["MaSanPham"]);
+                sp.TenSanPham = reader["TenSanPham"].ToString();
+                sp.MoTa = reader["MoTa"].ToString();
+                sp.Gia = Convert.ToDecimal(reader["Gia"]);
+                sp.SoLuong = Convert.ToInt32(reader["SoLuong"]);
+                sp.HinhAnh = reader["HinhAnh"].ToString();
+
+                // ĐỌC CỘT MỚI
+                if (reader["MaDanhMuc"] != DBNull.Value)
+                {
+                    sp.MaDanhMuc = reader["MaDanhMuc"].ToString();
+                }
+
+                ds.Add(sp);
+            }
+
+            reader.Close();
+            DongKetNoi();
+            return ds;
+        }
+    }
 }

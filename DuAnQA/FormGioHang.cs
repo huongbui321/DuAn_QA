@@ -20,6 +20,7 @@ namespace DuAnQA
         private void FormGioHang_Load(object sender, EventArgs e)
         {
             HienThiGioHang();
+            flowGioHang.Controls.Add(labelTrong);
         }
         private void HienThiGioHang()
         {
@@ -125,6 +126,16 @@ namespace DuAnQA
                 StaticData.DanhSachGioHang.Clear();
                 this.Close();
             }
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            Label labelTrong = new Label();
+            labelTrong.Text = "🛒 Giỏ hàng của bạn đang trống!";
+            labelTrong.Font = new Font("Segoe UI", 14, FontStyle.Italic);
+            labelTrong.ForeColor = Color.Gray;
+            labelTrong.TextAlign = ContentAlignment.MiddleCenter;
+            labelTrong.Dock = DockStyle.Fill;
         }
     }
 }

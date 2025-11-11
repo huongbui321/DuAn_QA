@@ -45,7 +45,10 @@ namespace DuAnQA
 
         private void btnThemGioHang_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"{sp.TenSanPham} đã được thêm vào giỏ hàng!");
+            MessageBox.Show($"{sp.TenSanPham} đã được thêm vào giỏ hàng!",
+                "Thông báo",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
             var spTonTai = StaticData.DanhSachGioHang
        .FirstOrDefault(x => x.TenSP == sp.TenSanPham && x.Size == cboSize.Text);
 

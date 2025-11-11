@@ -18,6 +18,7 @@ namespace DuAnQA
         public decimal Gia { get; set; }
         public int SoLuong { get; set; }
         public string HinhAnh { get; set; }
+        public string MaDanhMuc { get; set; }
 
 
         public SanPham(int maSanPham, string tenSanPham, string moTa, decimal gia, int soLuong, string hinhAnh)

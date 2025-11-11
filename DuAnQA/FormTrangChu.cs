@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DuAnQA
@@ -13,136 +11,256 @@ namespace DuAnQA
     public partial class FormTrangChu : Form
     {
         KetNoi kn = new KetNoi();
+
+        // Đây là danh sách "chính", tải 1 lần khi mở form
+        List<SanPham> danhSachSanPham;
+
         public FormTrangChu()
         {
             InitializeComponent();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
+        // ==================== SỰ KIỆN LOAD FORM ====================
         private void FormTrangChu_Load(object sender, EventArgs e)
         {
-            HienThiSanPham();
+            // 1. Tải danh sách sản phẩm GỐC (master list) một lần duy nhất
+            danhSachSanPham = kn.LayDanhSachSanPham();
+
+            // 2. Tải danh mục lên panel menu bên trái
+            TaiDanhMucLenPanel();
+
+            // 3. Hiển thị toàn bộ sản phẩm ban đầu
+            HienThiDanhSach(danhSachSanPham);
         }
-        private void HienThiSanPham()
+
+        // ==================== TẢI DANH MỤC LÊN MENU ====================
+        private void TaiDanhMucLenPanel()
+        {
+            flpDanhMuc.Controls.Clear();
+
+            // 2. TẠO NÚT "TẤT CẢ SẢN PHẨM"
+            Button btnTatCa = new Button();
+            btnTatCa.Text = "🛍️ Tất cả                sản phẩm";
+            btnTatCa.Width = flpDanhMuc.Width - 25;
+            btnTatCa.Height = 70;
+            btnTatCa.TextAlign = ContentAlignment.MiddleLeft;
+            btnTatCa.FlatStyle = FlatStyle.Flat;
+            btnTatCa.FlatAppearance.BorderSize = 0;
+            btnTatCa.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            btnTatCa.ForeColor = Color.DeepPink; // Đánh dấu là đang chọn
+            btnTatCa.Tag = "ALL";
+            btnTatCa.Cursor = Cursors.Hand;
+            btnTatCa.Click += DanhMuc_Click;
+            flpDanhMuc.Controls.Add(btnTatCa);
+
+            // 3. LẤY DANH MỤC TỪ CSDL
+            DataTable dtDanhMuc = kn.LayTatCaDanhMuc();
+
+            // 4. TẠO CÁC NÚT CHO DANH MỤC KHÁC
+            foreach (DataRow row in dtDanhMuc.Rows)
+            {
+                Button btn = new Button();
+                btn.Text = "    • " + row["TenDanhMuc"].ToString();
+                btn.Width = flpDanhMuc.Width - 25;
+                btn.Height = 50;
+                btn.TextAlign = ContentAlignment.MiddleLeft;
+                btn.FlatStyle = FlatStyle.Flat;
+                btn.FlatAppearance.BorderSize = 0;
+                btn.Font = new Font("Segoe UI", 9);
+                btn.Cursor = Cursors.Hand;
+                btn.Tag = row["MaDanhMuc"].ToString();
+                btn.Click += DanhMuc_Click;
+                flpDanhMuc.Controls.Add(btn);
+            }
+        }
+
+        // ==================== HÀM HIỂN THỊ CHUNG ====================
+        // (Đây là hàm HienThiSanPham cũ, đã đổi tên)
+        private void HienThiDanhSach(List<SanPham> ds)
         {
             flowSanPham.Controls.Clear();
-            List<SanPham> ds = kn.LayDanhSachSanPham();
+
+            if (ds == null || ds.Count == 0)
+            {
+                Label lbl = new Label();
+                lbl.Text = "Không có sản phẩm nào phù hợp!";
+                lbl.AutoSize = true;
+                lbl.Font = new Font("Segoe UI", 12, FontStyle.Italic);
+                lbl.ForeColor = Color.Gray;
+                flowSanPham.Controls.Add(lbl);
+                return;
+            }
 
             foreach (SanPham sp in ds)
             {
-                // tạo bản sao cục bộ để tránh lỗi closure khi gán sự kiện trong vòng lặp
-                SanPham spLocal = sp;
-
-                Panel pnlSP = new Panel();
-                pnlSP.Width = 200;
-                pnlSP.Height = 280;
-                pnlSP.BackColor = Color.MistyRose;
-                pnlSP.Margin = new Padding(10);
-                pnlSP.Cursor = Cursors.Hand; // con trỏ khi rê vào
-
-                // Ảnh sản phẩm
-                PictureBox pic = new PictureBox();
-                pic.SizeMode = PictureBoxSizeMode.Zoom;
-                string duongDan = Path.Combine(Application.StartupPath, spLocal.HinhAnh);
-                if (File.Exists(duongDan))
-                    pic.Image = Image.FromFile(duongDan);
-                // nếu không có file, có thể gán ảnh mặc định hoặc để trống
-                pic.Width = 180;
-                pic.Height = 180;
-                pic.Top = 10;
-                pic.Left = 10;
-                pic.Cursor = Cursors.Hand;
-
-                // Tên sản phẩm
-                Label lblTen = new Label();
-                lblTen.Text = spLocal.TenSanPham;
-                lblTen.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-                lblTen.ForeColor = Color.DeepPink;
-                lblTen.AutoSize = false;
-                lblTen.TextAlign = ContentAlignment.MiddleCenter;
-                lblTen.Width = pnlSP.Width - 10;
-                lblTen.Height = 36; // cho phép xuống 2 dòng
-                lblTen.Top = pic.Bottom + 5;
-                lblTen.Left = (pnlSP.Width - lblTen.Width) / 2;
-                lblTen.Cursor = Cursors.Hand;
-
-                // Giá sản phẩm
-                Label lblGia = new Label();
-                lblGia.Text = spLocal.Gia.ToString("N0") + " VNĐ";
-                lblGia.ForeColor = Color.HotPink;
-                lblGia.Font = new Font("Segoe UI", 9, FontStyle.Regular);
-                lblGia.AutoSize = false;
-                lblGia.TextAlign = ContentAlignment.MiddleCenter;
-                lblGia.Width = pnlSP.Width - 10;
-                lblGia.Height = 24;
-                lblGia.Top = lblTen.Bottom + 2;
-                lblGia.Left = (pnlSP.Width - lblGia.Width) / 2;
-                lblGia.Cursor = Cursors.Hand;
-
-                // Gán sản phẩm vào Tag của panel để lấy lại sau
-                pnlSP.Tag = spLocal;
-
-                // Gắn sự kiện Click cho panel và các control con
-                // dùng cùng 1 handler để mở chi tiết
-                pnlSP.Click += MoChiTietSanPham;
-                pic.Click += MoChiTietSanPham;
-                lblTen.Click += MoChiTietSanPham;
-                lblGia.Click += MoChiTietSanPham;
-
-                // Thêm control vào panel (thêm theo thứ tự: ảnh rồi tên rồi giá)
-                pnlSP.Controls.Add(pic);
-                pnlSP.Controls.Add(lblTen);
-                pnlSP.Controls.Add(lblGia);
-
-                // Thêm panel vào flowLayoutPanel
-                flowSanPham.Controls.Add(pnlSP);
+                Panel pnl = TaoPanelSanPham(sp);
+                flowSanPham.Controls.Add(pnl);
             }
         }
+
+        // ==================== HÀM TẠO 1 PANEL SẢN PHẨM ====================
+        private Panel TaoPanelSanPham(SanPham sp)
+        {
+            Panel pnlSP = new Panel();
+            pnlSP.Width = 200;
+            pnlSP.Height = 280;
+            pnlSP.BackColor = Color.MistyRose;
+            pnlSP.Margin = new Padding(10);
+            pnlSP.Cursor = Cursors.Hand;
+
+            // Ảnh sản phẩm
+            PictureBox pic = new PictureBox();
+            pic.SizeMode = PictureBoxSizeMode.Zoom;
+            string duongDan = Path.Combine(Application.StartupPath, sp.HinhAnh ?? "");
+            if (File.Exists(duongDan))
+                pic.Image = Image.FromFile(duongDan);
+            pic.Width = 180;
+            pic.Height = 180;
+            pic.Top = 10;
+            pic.Left = 10;
+            pic.Cursor = Cursors.Hand;
+
+            // Tên sản phẩm
+            Label lblTen = new Label();
+            lblTen.Text = sp.TenSanPham;
+            lblTen.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            lblTen.ForeColor = Color.DeepPink;
+            lblTen.AutoSize = false;
+            lblTen.TextAlign = ContentAlignment.MiddleCenter;
+            lblTen.Width = pnlSP.Width - 10;
+            lblTen.Height = 36;
+            lblTen.Top = pic.Bottom + 5;
+            lblTen.Left = (pnlSP.Width - lblTen.Width) / 2;
+            lblTen.Cursor = Cursors.Hand;
+
+            // Giá sản phẩm
+            Label lblGia = new Label();
+            lblGia.Text = sp.Gia.ToString("N0") + " VNĐ";
+            lblGia.ForeColor = Color.HotPink;
+            lblGia.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+            lblGia.AutoSize = false;
+            lblGia.TextAlign = ContentAlignment.MiddleCenter;
+            lblGia.Width = pnlSP.Width - 10;
+            lblGia.Height = 24;
+            lblGia.Top = lblTen.Bottom + 2;
+            lblGia.Left = (pnlSP.Width - lblGia.Width) / 2;
+            lblGia.Cursor = Cursors.Hand;
+
+            // Gắn sản phẩm vào panel
+            pnlSP.Tag = sp;
+
+            // Gắn sự kiện mở chi tiết
+            pnlSP.Click += MoChiTietSanPham;
+            pic.Click += MoChiTietSanPham;
+            lblTen.Click += MoChiTietSanPham;
+            lblGia.Click += MoChiTietSanPham;
+
+            // Thêm control con
+            pnlSP.Controls.Add(pic);
+            pnlSP.Controls.Add(lblTen);
+            pnlSP.Controls.Add(lblGia);
+
+            return pnlSP;
+        }
+
+        // ==================== SỰ KIỆN CLICK LỌC DANH MỤC ====================
+        private void DanhMuc_Click(object sender, EventArgs e)
+        {
+            Button btnDuocNhan = sender as Button;
+            string maDM = btnDuocNhan.Tag.ToString();
+
+            // Đổi màu nút (để người dùng biết đang chọn)
+            foreach (Control ctrl in flpDanhMuc.Controls)
+            {
+                if (ctrl is Button)
+                {
+                    (ctrl as Button).ForeColor = Color.Black;
+                }
+            }
+            btnDuocNhan.ForeColor = Color.DeepPink;
+
+            // Lọc sản phẩm từ MASTER LIST
+            List<SanPham> dsKetQua;
+
+            if (maDM == "ALL")
+            {
+                dsKetQua = danhSachSanPham; // Lấy lại toàn bộ
+            }
+            else
+            {
+                // Dùng LINQ để lọc danh sách có sẵn
+                dsKetQua = danhSachSanPham
+                    .Where(sp => sp.MaDanhMuc == maDM)
+                    .ToList();
+            }
+
+            // Hiển thị kết quả lọc
+            HienThiDanhSach(dsKetQua);
+        }
+
+        // ==================== SỰ KIỆN CLICK NÚT TÌM KIẾM ====================
+        private void btnTK_Click(object sender, EventArgs e)
+        {
+            // (Giả sử TextBox tên là txtTK)
+            string tuKhoa = txtTK.Text.Trim().ToLower();
+
+            // Nếu ô tìm kiếm trống, hiển thị lại toàn bộ
+            if (string.IsNullOrEmpty(tuKhoa))
+            {
+                HienThiDanhSach(danhSachSanPham);
+                return;
+            }
+
+            // Dùng LINQ để lọc danh sách có sẵn
+            var ketQua = danhSachSanPham
+                .Where(sp => sp.TenSanPham.ToLower().Contains(tuKhoa))
+                .ToList();
+
+            // Hiển thị kết quả tìm kiếm
+            HienThiDanhSach(ketQua);
+        }
+
+        // ==================== MỞ FORM CHI TIẾT SẢN PHẨM ====================
         private void MoChiTietSanPham(object sender, EventArgs e)
         {
-            // Tìm panel chứa sản phẩm:
             Control ctrl = sender as Control;
-
-            // Nếu người click là control con (PictureBox/Label), lấy parent panel
             Panel pnl = null;
+
+            // Tìm Panel cha
             if (ctrl is Panel)
                 pnl = ctrl as Panel;
             else if (ctrl.Parent is Panel)
                 pnl = ctrl.Parent as Panel;
             else
             {
-                // tìm lên parent thêm một cấp nữa (phòng trường hợp sâu hơn)
                 Control p = ctrl.Parent;
                 while (p != null && !(p is Panel))
                     p = p.Parent;
                 pnl = p as Panel;
             }
 
-            if (pnl == null) return;
+            if (pnl == null || pnl.Tag == null) return;
 
-            // Lấy sản phẩm từ Tag
             if (pnl.Tag is SanPham sp)
             {
-                // Mở form chi tiết modal
                 FormChiTietSanPham f = new FormChiTietSanPham(sp);
                 f.StartPosition = FormStartPosition.CenterParent;
                 f.ShowDialog(this);
             }
         }
 
+        // ==================== MỞ GIỎ HÀNG ====================
         private void picGioHang_Click(object sender, EventArgs e)
         {
+            // (Giả sử PictureBox tên là picGioHang)
             FormGioHang f = new FormGioHang();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog();
         }
+
+        // (Các hàm rỗng bạn đã có)
+        private void panel1_Paint(object sender, PaintEventArgs e) { }
+        private void flpDanhMuc_Paint(object sender, PaintEventArgs e) { }
+
     }
 }
-
-
-
-

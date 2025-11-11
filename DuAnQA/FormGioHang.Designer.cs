@@ -35,6 +35,8 @@
             btnQuayLai = new Button();
             sqlCommand2 = new Microsoft.Data.SqlClient.SqlCommand();
             flowGioHang = new FlowLayoutPanel();
+            labelTrong = new Label();
+            flowGioHang.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -93,10 +95,21 @@
             // 
             // flowGioHang
             // 
+            flowGioHang.Controls.Add(labelTrong);
             flowGioHang.Location = new Point(85, 150);
             flowGioHang.Name = "flowGioHang";
             flowGioHang.Size = new Size(1032, 288);
             flowGioHang.TabIndex = 5;
+            // 
+            // labelTrong
+            // 
+            labelTrong.AutoSize = true;
+            labelTrong.Location = new Point(3, 0);
+            labelTrong.Name = "labelTrong";
+            labelTrong.Size = new Size(72, 25);
+            labelTrong.TabIndex = 0;
+            labelTrong.Text = "            ";
+            labelTrong.Click += label2_Click;
             // 
             // FormGioHang
             // 
@@ -112,6 +125,8 @@
             Name = "FormGioHang";
             Text = "FormGioHang";
             Load += FormGioHang_Load;
+            flowGioHang.ResumeLayout(false);
+            flowGioHang.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -124,5 +139,6 @@
         private Button btnQuayLai;
         private Microsoft.Data.SqlClient.SqlCommand sqlCommand2;
         private FlowLayoutPanel flowGioHang;
+        private Label labelTrong;
     }
 }
