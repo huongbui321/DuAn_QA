@@ -40,14 +40,15 @@ namespace DuAnQA
 
             // 2. TẠO NÚT "TẤT CẢ SẢN PHẨM"
             Button btnTatCa = new Button();
-            btnTatCa.Text = "🛍️ Tất cả                sản phẩm";
+            // THÊM EMOJI VÀO ĐÂY
+            btnTatCa.Text = "🛍️ Tất cả                sản phẩm"; // Ví dụ: icon ngôi nhà
             btnTatCa.Width = flpDanhMuc.Width - 25;
             btnTatCa.Height = 70;
             btnTatCa.TextAlign = ContentAlignment.MiddleLeft;
             btnTatCa.FlatStyle = FlatStyle.Flat;
             btnTatCa.FlatAppearance.BorderSize = 0;
-            btnTatCa.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            btnTatCa.ForeColor = Color.DeepPink; // Đánh dấu là đang chọn
+            btnTatCa.Font = new Font("Segoe UI", 10, FontStyle.Bold); // Để font này hỗ trợ Emoji
+            btnTatCa.ForeColor = Color.DeepPink;
             btnTatCa.Tag = "ALL";
             btnTatCa.Cursor = Cursors.Hand;
             btnTatCa.Click += DanhMuc_Click;
@@ -60,19 +61,53 @@ namespace DuAnQA
             foreach (DataRow row in dtDanhMuc.Rows)
             {
                 Button btn = new Button();
-                btn.Text = "    • " + row["TenDanhMuc"].ToString();
+                string tenDanhMuc = row["TenDanhMuc"].ToString();
+                string icon = "";
+
+                // CHỌN ICON TÙY THEO TÊN DANH MỤC
+                switch (tenDanhMuc.ToLower()) // Dùng ToLower để so sánh không phân biệt chữ hoa/thường
+                {
+                    case "áo":
+                        icon = "👕"; // Icon áo thun
+                        break;
+                    case "quần":
+                        icon = "👖"; // Icon quần jean
+                        break;
+                    case "váy":
+                        icon = "👗"; // Icon váy
+                        break;
+                    case "set":
+                        icon = "👚"; // Icon áo blouse
+                        break;
+                    case "giày":
+                        icon = "👟"; // Icon giày thể thao
+                        break;
+                    case "phụ kiện":
+                        icon = "💎"; // Icon kim cương (hoặc 👜 cho túi xách, 🧢 cho mũ...)
+                        break;
+                    default:
+                        icon = "✨"; // Icon mặc định nếu không khớp
+                        break;
+                }
+
+                // THÊM EMOJI VÀO TRƯỚC TÊN DANH MỤC
+                btn.Text = icon + " " + tenDanhMuc; // Ví dụ: "👕 Áo"
+                                                    // Nếu bạn muốn có dấu chấm đầu dòng như trước, hãy thêm vào:
+                                                    // btn.Text = "    • " + icon + " " + tenDanhMuc; 
+
                 btn.Width = flpDanhMuc.Width - 25;
                 btn.Height = 50;
                 btn.TextAlign = ContentAlignment.MiddleLeft;
                 btn.FlatStyle = FlatStyle.Flat;
                 btn.FlatAppearance.BorderSize = 0;
-                btn.Font = new Font("Segoe UI", 9);
+                btn.Font = new Font("Segoe UI", 9); // Font Segoe UI thường hỗ trợ Emoji rất tốt
                 btn.Cursor = Cursors.Hand;
                 btn.Tag = row["MaDanhMuc"].ToString();
                 btn.Click += DanhMuc_Click;
                 flpDanhMuc.Controls.Add(btn);
             }
         }
+       
 
         // ==================== HÀM HIỂN THỊ CHUNG ====================
         // (Đây là hàm HienThiSanPham cũ, đã đổi tên)
