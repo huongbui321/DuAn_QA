@@ -51,7 +51,9 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.BackColor = Color.AliceBlue;
             label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.HotPink;
             label1.Location = new Point(238, 29);
             label1.Name = "label1";
             label1.Size = new Size(222, 45);
@@ -80,7 +82,7 @@
             btnXacNhan.Name = "btnXacNhan";
             btnXacNhan.Size = new Size(114, 36);
             btnXacNhan.TabIndex = 4;
-            btnXacNhan.Text = "Xác nhận ";
+            btnXacNhan.Text = "  Xác nhận ";
             btnXacNhan.UseVisualStyleBackColor = true;
             btnXacNhan.Click += btnXacNhan_Click;
             // 
@@ -112,6 +114,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.AliceBlue;
             ClientSize = new Size(712, 589);
             Controls.Add(lblTongTien);
             Controls.Add(label3);

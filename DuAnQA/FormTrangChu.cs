@@ -287,13 +287,10 @@ namespace DuAnQA
         // ==================== MỞ GIỎ HÀNG ====================
         private void picGioHang_Click(object sender, EventArgs e)
         {
-            // (Giả sử PictureBox tên là picGioHang)
             FormGioHang f = new FormGioHang();
             f.StartPosition = FormStartPosition.CenterParent;
             f.ShowDialog();
         }
-
-        // (Các hàm rỗng bạn đã có)
         private void panel1_Paint(object sender, PaintEventArgs e) { }
         private void flpDanhMuc_Paint(object sender, PaintEventArgs e) { }
 

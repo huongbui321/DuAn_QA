@@ -14,5 +14,6 @@ namespace DuAnQA
         public int SoLuong { get; set; }
         public decimal Gia { get; set; }
         public decimal ThanhTien => Gia * SoLuong;
+        public int MaSanPham { get; set; }
     }
     }

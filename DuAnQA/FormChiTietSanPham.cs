@@ -45,32 +45,47 @@ namespace DuAnQA
 
         private void btnThemGioHang_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"{sp.TenSanPham} đã được thêm vào giỏ hàng!",
-                "Thông báo",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            int soLuongMua = (int)numSoLuongMua.Value;
+            string sizeChon = cboSize.Text;
+
+            if (string.IsNullOrEmpty(sizeChon))
+            {
+                MessageBox.Show("Vui lòng chọn size sản phẩm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra xem sản phẩm (với size cụ thể) đã có trong giỏ chưa
+            // (Kiểm tra bằng MaSanPham và Size là chính xác nhất)
             var spTonTai = StaticData.DanhSachGioHang
-       .FirstOrDefault(x => x.TenSP == sp.TenSanPham && x.Size == cboSize.Text);
+                .FirstOrDefault(x => x.MaSanPham == sp.MaSanPham && x.Size == sizeChon);
 
             if (spTonTai != null)
             {
-                spTonTai.SoLuong += (int)numSoLuongMua.Value;
+                // Nếu đã có: Chỉ cộng thêm số lượng
+                spTonTai.SoLuong += soLuongMua;
+                // Không cần gán ThanhTien, vì nó tự tính
             }
             else
             {
-                // Nếu chưa có thì thêm mới
+                // Nếu chưa có: Thêm mới
                 GioHang item = new GioHang
                 {
+                    MaSanPham = sp.MaSanPham, // <-- Gán MaSanPham (quan trọng)
                     TenSP = sp.TenSanPham,
                     Gia = sp.Gia,
-                    SoLuong = (int)numSoLuongMua.Value,
-                    Size = cboSize.Text,
+                    SoLuong = soLuongMua,
+                    Size = sizeChon,
                     HinhAnh = sp.HinhAnh
+                    // Không gán ThanhTien, vì nó tự tính
                 };
                 StaticData.DanhSachGioHang.Add(item);
             }
 
-
+            // Thông báo sau khi đã thêm/cập nhật xong
+            MessageBox.Show($"{sp.TenSanPham} (Size: {sizeChon}) đã được thêm vào giỏ hàng!",
+                "Thông báo",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
 
         private void button1_Click(object sender, EventArgs e)
