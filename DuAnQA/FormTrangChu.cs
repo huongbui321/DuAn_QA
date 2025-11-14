@@ -20,7 +20,20 @@ namespace DuAnQA
             InitializeComponent();
         }
 
+
+        private void TaiLaiDuLieuSanPham()
+        {
+            // 1. Tải lại danh sách chính từ CSDL (với số lượng mới)
+            danhSachSanPham = kn.LayDanhSachSanPham();
+
+            // 2. Tải lại danh mục (để reset màu)
+            TaiDanhMucLenPanel();
+
+            // 3. Hiển thị lại toàn bộ sản phẩm (với số lượng mới)
+            HienThiDanhSach(danhSachSanPham);
+        }
         // ==================== SỰ KIỆN LOAD FORM ====================
+
         private void FormTrangChu_Load(object sender, EventArgs e)
         {
             // 1. Tải danh sách sản phẩm GỐC (master list) một lần duy nhất
@@ -107,7 +120,7 @@ namespace DuAnQA
                 flpDanhMuc.Controls.Add(btn);
             }
         }
-       
+
 
         // ==================== HÀM HIỂN THỊ CHUNG ====================
         // (Đây là hàm HienThiSanPham cũ, đã đổi tên)
@@ -289,10 +302,58 @@ namespace DuAnQA
         {
             FormGioHang f = new FormGioHang();
             f.StartPosition = FormStartPosition.CenterParent;
-            f.ShowDialog();
+            DialogResult result = f.ShowDialog(this);
+            if (result == DialogResult.OK)
+            {
+                TaiLaiDuLieuSanPham();
+            }
         }
         private void panel1_Paint(object sender, PaintEventArgs e) { }
         private void flpDanhMuc_Paint(object sender, PaintEventArgs e) { }
 
+        private void btnDangXuat_Click(object sender, EventArgs e)
+        {
+            // 1. Hiển thị hộp thoại xác nhận
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn đăng xuất không?", // Nội dung thông báo
+                "Xác nhận đăng xuất",                  // Tiêu đề
+                MessageBoxButtons.YesNo,                 // Các nút Yes/No
+                MessageBoxIcon.Question                  // Icon câu hỏi
+            );
+
+            // 2. Kiểm tra người dùng bấm nút nào
+            if (result == DialogResult.Yes)
+            {
+                // Nếu bấm "Yes":
+
+                // 2a. Xóa thông tin đăng nhập (Rất quan trọng)
+                StaticData.MaNguoiDungHienTai = 0;
+                StaticData.TenNguoiDungHienTai = "";
+
+                // 2b. Đóng FormTrangChu
+                // (Code ở FormDangNhap sẽ tự động hiển thị lại FormDangNhap)
+                this.Close();
+            }
+            // 3. Nếu bấm "No", không làm gì cả, hộp thoại tự đóng.
+        }
+
+        private void picLichSu_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra xem người dùng đã đăng nhập chưa
+            if (StaticData.MaNguoiDungHienTai == 0)
+            {
+                MessageBox.Show("Vui lòng đăng nhập để xem lịch sử mua hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // (Tùy chọn: Mở form đăng nhập nếu muốn)
+                // FormDangNhap fLogin = new FormDangNhap();
+                // fLogin.ShowDialog();
+                return;
+            }
+
+            // Mở Form Lịch sử và truyền ID người dùng hiện tại vào
+            FormLichSuMuaHang fLichSu = new FormLichSuMuaHang(StaticData.MaNguoiDungHienTai);
+            fLichSu.StartPosition = FormStartPosition.CenterParent;
+            fLichSu.ShowDialog(this);
+        }
     }
 }

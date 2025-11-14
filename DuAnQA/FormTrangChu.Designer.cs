@@ -33,7 +33,7 @@
             pictureBox3 = new PictureBox();
             label3 = new Label();
             label2 = new Label();
-            button1 = new Button();
+            btnDangXuat = new Button();
             picGioHang = new PictureBox();
             txtTK = new TextBox();
             label1 = new Label();
@@ -41,11 +41,13 @@
             panel1 = new Panel();
             btnTK = new Button();
             flpDanhMuc = new FlowLayoutPanel();
+            picLichSu = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)picGioHang).BeginInit();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)picLichSu).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -96,14 +98,15 @@
             label2.TabIndex = 6;
             label2.Text = "huongieclothes@gmail.com";
             // 
-            // button1
+            // btnDangXuat
             // 
-            button1.Location = new Point(1081, 87);
-            button1.Name = "button1";
-            button1.Size = new Size(107, 34);
-            button1.TabIndex = 5;
-            button1.Text = "Đăng xuất";
-            button1.UseVisualStyleBackColor = true;
+            btnDangXuat.Location = new Point(1081, 21);
+            btnDangXuat.Name = "btnDangXuat";
+            btnDangXuat.Size = new Size(107, 34);
+            btnDangXuat.TabIndex = 5;
+            btnDangXuat.Text = "Đăng xuất";
+            btnDangXuat.UseVisualStyleBackColor = true;
+            btnDangXuat.Click += btnDangXuat_Click;
             // 
             // picGioHang
             // 
@@ -144,12 +147,13 @@
             // panel1
             // 
             panel1.BackColor = Color.LavenderBlush;
+            panel1.Controls.Add(picLichSu);
             panel1.Controls.Add(btnTK);
             panel1.Controls.Add(pictureBox4);
             panel1.Controls.Add(pictureBox3);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(btnDangXuat);
             panel1.Controls.Add(picGioHang);
             panel1.Controls.Add(txtTK);
             panel1.Controls.Add(label1);
@@ -180,6 +184,17 @@
             flpDanhMuc.TabIndex = 4;
             flpDanhMuc.Paint += flpDanhMuc_Paint;
             // 
+            // picLichSu
+            // 
+            picLichSu.Image = Properties.Resources.iconLSDN;
+            picLichSu.Location = new Point(1029, 74);
+            picLichSu.Name = "picLichSu";
+            picLichSu.Size = new Size(44, 35);
+            picLichSu.SizeMode = PictureBoxSizeMode.StretchImage;
+            picLichSu.TabIndex = 11;
+            picLichSu.TabStop = false;
+            picLichSu.Click += picLichSu_Click;
+            // 
             // FormTrangChu
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -198,6 +213,7 @@
             ((System.ComponentModel.ISupportInitialize)picGioHang).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picLichSu).EndInit();
             ResumeLayout(false);
         }
 
@@ -206,7 +222,7 @@
         private PictureBox picGioHang;
         private TextBox txtTK;
         private Label label1;
-        private Button button1;
+        private Button btnDangXuat;
         private Label label3;
         private Label label2;
         private PictureBox pictureBox4;
@@ -215,5 +231,6 @@
         private Panel panel1;
         private Button btnTK;
         private FlowLayoutPanel flpDanhMuc;
+        private PictureBox picLichSu;
     }
 }

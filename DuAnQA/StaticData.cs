@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace DuAnQA
 {
-    internal class StaticData
+    public static class StaticData
     {
-
-        // Danh sách giỏ hàng chia sẻ (khởi tạo rỗng)
         public static List<GioHang> DanhSachGioHang = new List<GioHang>();
+
+        public static int MaNguoiDungHienTai { get; set; } = 0;
+
+        public static string TenNguoiDungHienTai { get; set; } = "";
 
     }
 }

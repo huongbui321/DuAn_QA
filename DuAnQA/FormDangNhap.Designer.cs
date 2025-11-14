@@ -117,7 +117,7 @@
             linkQuenMK.TabIndex = 2;
             linkQuenMK.TabStop = true;
             linkQuenMK.Text = "Quên mật khẩu?";
-            linkQuenMK.LinkClicked += linkQuenMK_LinkClicked_1;
+            linkQuenMK.LinkClicked += linkQuenMK_LinkClicked;
             // 
             // linkDangKy
             // 
@@ -159,7 +159,7 @@
             btnMat.TabIndex = 5;
             btnMat.Text = "👁️";
             btnMat.UseVisualStyleBackColor = true;
-            btnMat.Click += btnMat_Click_1;
+            btnMat.Click += btnMat_Click;
             // 
             // label4
             // 

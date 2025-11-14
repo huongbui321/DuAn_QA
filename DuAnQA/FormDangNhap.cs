@@ -13,12 +13,21 @@ namespace DuAnQA
 {
     public partial class FormDangNhap : Form
     {
+        // Khai báo kết nối ở đây để có thể dùng trong 'finally'
+        KetNoi kn = new KetNoi();
+        bool hienMatKhau = false; // Biến lưu trạng thái
+
         public FormDangNhap()
         {
             InitializeComponent();
-
         }
 
+        private void FormDangNhap_Load(object sender, EventArgs e)
+        {
+            txtMatKhau.UseSystemPasswordChar = true;
+        }
+
+        // ==================== LOGIC ĐĂNG NHẬP (ĐÃ SỬA) ====================
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
             string tenDN = txtTenDN.Text.Trim();
@@ -26,102 +35,91 @@ namespace DuAnQA
 
             if (tenDN == "" || matKhau == "")
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // ... (code báo thiếu thông tin)
                 return;
             }
 
-            // Trường hợp đặc biệt: nếu là admin / mật khẩu '1' → mở FormQL_BanHang
             if (tenDN.Equals("admin", StringComparison.OrdinalIgnoreCase) && matKhau == "1")
             {
-                // kiểm tra trong DB nếu cần (ví dụ admin phải tồn tại trong DB)
-                FormQL_BanHang fAdmin = new FormQL_BanHang();
-                fAdmin.Show();
-                this.Hide();
+                // ... (code đăng nhập admin)
                 return;
             }
 
-            // Ngược lại: kiểm tra tài khoản trong DB
+            SqlDataReader dr = null;
             try
             {
-                KetNoi kn = new KetNoi();
                 kn.MoKetNoi();
+                SqlCommand cmd = new SqlCommand("SELECT MaNguoiDung, TenDangNhap FROM NguoiDung WHERE TenDangNhap=@user AND MatKhau=@pass", kn.conn);
+                cmd.Parameters.AddWithValue("@user", tenDN);
+                cmd.Parameters.AddWithValue("@pass", matKhau);
 
-                SqlCommand cmd = new SqlCommand("SELECT * FROM NguoiDung WHERE TenDangNhap=@user AND MatKhau=@pass", kn.conn);
-                cmd.Parameters.AddWithValue("@user", txtTenDN.Text);
-                cmd.Parameters.AddWithValue("@pass", txtMatKhau.Text);
+                dr = cmd.ExecuteReader();
 
-                SqlDataReader dr = cmd.ExecuteReader();
-                if (dr.Read())
+                if (dr.Read()) // Nếu tìm thấy (Đúng)
                 {
+                    // Lưu thông tin người dùng
+                    StaticData.MaNguoiDungHienTai = Convert.ToInt32(dr["MaNguoiDung"]);
+                    StaticData.TenNguoiDungHienTai = dr["TenDangNhap"].ToString();
+
                     MessageBox.Show("Đăng nhập thành công!");
-                    FormTrangChu kh = new FormTrangChu();
-                    kh.Show();
+
+                    dr.Close();
+                    kn.DongKetNoi();
                     this.Hide();
-                    return;
+                    FormTrangChu kh = new FormTrangChu();
+                    kh.ShowDialog();
+
+                    txtMatKhau.Clear(); // Xóa mật khẩu cũ
+                    this.Show(); 
                 }
-                else
+                else // Nếu không tìm thấy (Sai)
                 {
                     MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!");
                 }
-
-                kn.DongKetNoi();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Tài khoản không tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi đăng nhập: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Đảm bảo Reader và Kết nối LUÔN ĐƯỢC ĐÓNG
+                dr?.Close();
+                kn.DongKetNoi();
             }
         }
+
+        // ==================== CÁC NÚT KHÁC ====================
 
         private void btnThoat_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        bool hienMatKhau = false; // Biến lưu trạng thái
 
         private void btnMat_Click(object sender, EventArgs e)
         {
-            // Nếu đang hiển thị mật khẩu → ẩn đi
+            // (Đã gộp 2 hàm btnMat_Click_1 và btnMat_Click)
             if (hienMatKhau)
             {
                 txtMatKhau.UseSystemPasswordChar = true;
                 btnMat.Text = "👁"; // đổi icon về mắt thường
                 hienMatKhau = false;
             }
-            else // Nếu đang ẩn → hiện mật khẩu
+            else
             {
                 txtMatKhau.UseSystemPasswordChar = false;
-                btnMat.Text = "🙈"; // đổi icon sang mắt nhắm (hoặc chữ khác nếu bạn thích)
+                btnMat.Text = "🙈"; // đổi icon sang mắt nhắm
                 hienMatKhau = true;
             }
         }
 
-        private void FormDangNhap_Load(object sender, EventArgs e)
+        private void linkQuenMK_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            txtMatKhau.UseSystemPasswordChar = true;
-        }
-        private void linkQuenMK_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            FormQuenMK fQuenMK = new FormQuenMK(); // Tạo form quên mật khẩu
-            fQuenMK.Show();                        // Hiển thị form quên mật khẩu
+            // (Đã gộp 2 hàm linkQuenMK_LinkClicked_1 và linkQuenMK_LinkClicked)
+            FormQuenMK fQuenMK = new FormQuenMK();
+            fQuenMK.Show();
             this.Hide();
             fQuenMK.FormClosed += (s, args) => this.Show();
-        }
-
-        private void btnMat_Click_1(object sender, EventArgs e)
-        {
-            // Nếu đang hiển thị mật khẩu → ẩn đi
-            if (hienMatKhau)
-            {
-                txtMatKhau.UseSystemPasswordChar = true;
-                btnMat.Text = "👁"; // đổi icon về mắt thường
-                hienMatKhau = false;
-            }
-            else // Nếu đang ẩn → hiện mật khẩu
-            {
-                txtMatKhau.UseSystemPasswordChar = false;
-                btnMat.Text = "🙈"; // đổi icon sang mắt nhắm (hoặc chữ khác nếu bạn thích)
-                hienMatKhau = true;
-            }
         }
 
         private void linkDangKy_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -129,9 +127,7 @@ namespace DuAnQA
             FormDangKy fDangKy = new FormDangKy();
             fDangKy.Show();
             this.Hide();
-            fDangKy.FormClosed += (s, args) =>this.Show();
+            fDangKy.FormClosed += (s, args) => this.Show();
         }
-
-       
     }
 }

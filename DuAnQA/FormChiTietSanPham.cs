@@ -19,8 +19,7 @@ namespace DuAnQA
         {
             InitializeComponent();
             sp = sanPham;
-            btnMuaNgay.Click += btnMuaNgay_Click;
-            btnThemGioHang.Click += btnThemGioHang_Click;
+            
         }
 
         private void FormChiTietSanPham_Load(object sender, EventArgs e)
