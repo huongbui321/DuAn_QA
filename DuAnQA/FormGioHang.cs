@@ -55,20 +55,26 @@ namespace DuAnQA
             foreach (var sp in StaticData.DanhSachGioHang)
             {
                 Panel pnl = new Panel();
-                pnl.Width = 600;
+                pnl.Width = 600; // Tăng chiều rộng để chứa nút Xóa
                 pnl.Height = 120;
                 pnl.BorderStyle = BorderStyle.FixedSingle;
-                pnl.Margin = new Padding(200, 5, 5, 5);
+                pnl.Margin = new Padding(100, 5, 5, 5); // Giảm margin trái 1 chút
 
-                // Ảnh
+                // Ảnh (Sửa lỗi khóa file)
                 PictureBox pic = new PictureBox();
                 pic.SizeMode = PictureBoxSizeMode.Zoom;
-                // (Thêm kiểm tra HinhAnh null)
                 if (!string.IsNullOrEmpty(sp.HinhAnh))
                 {
                     string path = Path.Combine(Application.StartupPath, sp.HinhAnh);
                     if (File.Exists(path))
-                        pic.Image = Image.FromFile(path);
+                    {
+                        // Dùng MemoryStream để tránh lỗi khóa file
+                        byte[] imageData = File.ReadAllBytes(path);
+                        using (MemoryStream ms = new MemoryStream(imageData))
+                        {
+                            pic.Image = Image.FromStream(ms);
+                        }
+                    }
                 }
                 pic.Width = 100;
                 pic.Height = 100;
@@ -83,19 +89,27 @@ namespace DuAnQA
                 lblTen.Top = 10;
                 lblTen.AutoSize = true;
 
-                // Size
-                Label lblSize = new Label();
-                lblSize.Text = "Size: " + sp.Size;
-                lblSize.Left = 120;
-                lblSize.Top = 40;
-                lblSize.AutoSize = true;
+                // <<< SỬA 1: Dùng ComboBox cho Size >>>
+                ComboBox cboSize = new ComboBox();
+                cboSize.Items.AddRange(new[] { "S", "M", "L" });
+                cboSize.SelectedItem = sp.Size;
+                cboSize.Left = 120;
+                cboSize.Top = 40;
+                cboSize.Width = 70;
+                cboSize.DropDownStyle = ComboBoxStyle.DropDownList;
+                cboSize.Tag = sp; // Gán đối tượng sp vào Tag để biết đang sửa item nào
+                cboSize.SelectedIndexChanged += new EventHandler(cboSize_SelectedIndexChanged);
 
-                // Số lượng
-                Label lblSL = new Label();
-                lblSL.Text = "SL: " + sp.SoLuong;
-                lblSL.Left = 200;
-                lblSL.Top = 40;
-                lblSL.AutoSize = true;
+                // <<< SỬA 2: Dùng NumericUpDown cho Số lượng >>>
+                NumericUpDown numSL = new NumericUpDown();
+                numSL.Value = sp.SoLuong;
+                numSL.Minimum = 1;
+                numSL.Maximum = 99; // Giới hạn max, hoặc bạn có thể truy vấn số lượng tồn kho
+                numSL.Left = 200;
+                numSL.Top = 40;
+                numSL.Width = 50;
+                numSL.Tag = sp; // Gán đối tượng sp vào Tag
+                numSL.ValueChanged += new EventHandler(numSL_ValueChanged);
 
                 // Đơn giá
                 Label lblGia = new Label();
@@ -104,7 +118,7 @@ namespace DuAnQA
                 lblGia.Top = 70;
                 lblGia.AutoSize = true;
 
-                // Thành tiền (Lấy từ thuộc tính tự tính của GioHang.cs)
+                // Thành tiền
                 Label lblThanhTien = new Label();
                 lblThanhTien.Text = "Thành tiền: " + sp.ThanhTien.ToString("N0") + " VNĐ";
                 lblThanhTien.Font = new Font("Segoe UI", 9, FontStyle.Bold);
@@ -113,19 +127,76 @@ namespace DuAnQA
                 lblThanhTien.Top = 70;
                 lblThanhTien.AutoSize = true;
 
-                tongTien += sp.ThanhTien; // Dùng thuộc tính tự tính
+                tongTien += sp.ThanhTien;
+
+                // <<< SỬA 3: Thêm Nút Xóa >>>
+                Button btnXoa = new Button();
+                btnXoa.Text = "Xóa";
+                btnXoa.BackColor = Color.Pink;
+                btnXoa.Left = 520; // Đặt ở góc phải panel
+                btnXoa.Top = 35;
+                btnXoa.Width = 70;
+                btnXoa.Height = 40;
+                btnXoa.Tag = sp; // Gán đối tượng sp vào Tag
+                btnXoa.Click += new EventHandler(btnXoa_Click);
 
                 pnl.Controls.Add(pic);
                 pnl.Controls.Add(lblTen);
-                pnl.Controls.Add(lblSize);
-                pnl.Controls.Add(lblSL);
+                pnl.Controls.Add(cboSize); // Thêm cboSize (thay cho lblSize)
+                pnl.Controls.Add(numSL);   // Thêm numSL (thay cho lblSL)
                 pnl.Controls.Add(lblGia);
                 pnl.Controls.Add(lblThanhTien);
+                pnl.Controls.Add(btnXoa);  // Thêm btnXoa
 
                 flowGioHang.Controls.Add(pnl);
             }
 
             lblTongTien.Text = "Tổng tiền: " + tongTien.ToString("N0") + " VNĐ";
+        }
+        private void numSL_ValueChanged(object sender, EventArgs e)
+        {
+            // 1. Lấy control và đối tượng sp từ Tag
+            NumericUpDown num = (NumericUpDown)sender;
+            GioHang item = (GioHang)num.Tag;
+
+            // 2. Cập nhật số lượng trong giỏ hàng tĩnh
+            item.SoLuong = (int)num.Value;
+
+            // 3. Tải lại toàn bộ giỏ hàng để cập nhật thành tiền và tổng tiền
+            HienThiGioHang();
+        }
+
+        // --- SỰ KIỆN KHI THAY ĐỔI SIZE ---
+        private void cboSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // 1. Lấy control và đối tượng sp từ Tag
+            ComboBox cbo = (ComboBox)sender;
+            GioHang item = (GioHang)cbo.Tag;
+
+            // 2. Cập nhật size
+            item.Size = cbo.Text;
+
+            // 3. Tải lại giỏ hàng
+            HienThiGioHang();
+        }
+
+        // --- SỰ KIỆN KHI BẤM NÚT XÓA ---
+        private void btnXoa_Click(object sender, EventArgs e)
+        {
+            // 1. Lấy control và đối tượng sp từ Tag
+            Button btn = (Button)sender;
+            GioHang item = (GioHang)btn.Tag;
+
+            var result = MessageBox.Show($"Bạn có chắc muốn xóa {item.TenSP} khỏi giỏ hàng?", "Xác nhận", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                // 2. Xóa khỏi giỏ hàng tĩnh
+                StaticData.DanhSachGioHang.Remove(item);
+
+                // 3. Tải lại giỏ hàng
+                HienThiGioHang();
+            }
         }
 
         private void btnQuayLai_Click(object sender, EventArgs e)
@@ -156,50 +227,54 @@ namespace DuAnQA
                 return;
             }
 
-            // (Giả sử bạn đã lưu ID người dùng khi họ đăng nhập)
             if (StaticData.MaNguoiDungHienTai == 0)
             {
                 MessageBox.Show("Lỗi: Không tìm thấy thông tin người dùng. Vui lòng đăng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var result = MessageBox.Show("Bạn có chắc muốn thanh toán giỏ hàng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.No)
+            var confirmResult = MessageBox.Show("Bạn có chắc muốn đặt hàng và thanh toán giỏ hàng này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmResult == DialogResult.No)
                 return;
 
-            // Dùng thuộc tính tự tính của GioHang.cs
             decimal tongTien = StaticData.DanhSachGioHang.Sum(x => x.ThanhTien);
 
             FormThanhToan f = new FormThanhToan(tongTien);
             f.StartPosition = FormStartPosition.CenterParent;
 
-            // Chờ người dùng nhập OTP
-            if (f.ShowDialog() == DialogResult.OK)
+            // Chờ người dùng nhập OTP hoặc bấm Thoát
+            DialogResult thanhToanResult = f.ShowDialog();
+
+            // <<< SỬA LOGIC Ở ĐÂY >>>
+            // 1. Quyết định trạng thái dựa trên kết quả của FormThanhToan
+            string trangThaiDonHang;
+            if (thanhToanResult == DialogResult.OK)
             {
-                // === BẮT ĐẦU XỬ LÝ CSDL (TRANSACTION) ===
-
-                bool thanhCong = GhiDonHangVaoCSDL(tongTien);
-
-                if (thanhCong)
-                {
-                    MessageBox.Show("Đặt hàng thành công! Cảm ơn bạn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    StaticData.DanhSachGioHang.Clear(); // Xóa giỏ hàng tĩnh
-                    HienThiGioHang(); // Cập nhật lại giao diện (sẽ hiển thị giỏ trống)
-                    // this.Close(); // (Tùy bạn, có thể đóng hoặc ở lại xem giỏ trống)
-                    this.daThanhToanThanhCong = true;
-                }
-                // (Nếu thất bại, hàm GhiDonHangVaoCSDL sẽ tự hiển thị lỗi)
+                // Người dùng nhập OTP thành công
+                trangThaiDonHang = "Đã thanh toán";
             }
-            else
+            else // (DialogResult.Cancel hoặc đóng bằng dấu X)
             {
-                MessageBox.Show("Thanh toán đã bị hủy.", "Thông báo");
+                // Người dùng bấm "Thoát"
+                trangThaiDonHang = "Chờ xử lý";
+            }
+
+            // 2. LƯU ĐƠN HÀNG VÀO CSDL (LUÔN LUÔN LƯU, chỉ khác trạng thái)
+            bool thanhCong = GhiDonHangVaoCSDL(tongTien, trangThaiDonHang);
+
+            if (thanhCong)
+            {
+                MessageBox.Show($"Đặt hàng thành công! Trạng thái: {trangThaiDonHang}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                StaticData.DanhSachGioHang.Clear(); // Xóa giỏ hàng tĩnh
+                HienThiGioHang(); // Cập nhật lại giao diện (sẽ hiển thị giỏ trống)
+                this.daThanhToanThanhCong = true; // Đặt cờ để khi quay lại sẽ tải lại form MuaHang
             }
         }
 
         // ==========================================================
         // === HÀM MỚI: GHI ĐƠN HÀNG VÀ TRỪ KHO (TRANSACTION) ===
         // ==========================================================
-        private bool GhiDonHangVaoCSDL(decimal tongTien)
+        private bool GhiDonHangVaoCSDL(decimal tongTien, string trangThaiDonHang)
         {
             SqlTransaction transaction = null;
             try
@@ -208,12 +283,15 @@ namespace DuAnQA
                 transaction = kn.conn.BeginTransaction(); // Bắt đầu giao dịch
 
                 // BƯỚC A: TẠO ĐƠN HÀNG (DonHang)
-                int maNguoiDung = StaticData.MaNguoiDungHienTai; // Giả định
-                string sqlDonHang = "INSERT INTO DonHang (MaNguoiDung, NgayDat, TongTien, TrangThai) VALUES (@maND, GETDATE(), @tongTien, N'Chờ xử lý'); SELECT SCOPE_IDENTITY();";
+                int maNguoiDung = StaticData.MaNguoiDungHienTai;
+
+                // <<< SỬA 2: Dùng @trangThai thay vì N'Chờ xử lý' >>>
+                string sqlDonHang = "INSERT INTO DonHang (MaNguoiDung, NgayDat, TongTien, TrangThai) VALUES (@maND, GETDATE(), @tongTien, @trangThai); SELECT SCOPE_IDENTITY();";
 
                 object result = kn.ThucThiLayScalar(sqlDonHang, transaction,
                     new SqlParameter("@maND", maNguoiDung),
-                    new SqlParameter("@tongTien", tongTien)
+                    new SqlParameter("@tongTien", tongTien),
+                    new SqlParameter("@trangThai", trangThaiDonHang) // <<< SỬA 3: Thêm parameter
                 );
 
                 int maDonHangMoi = Convert.ToInt32(result);
@@ -221,8 +299,6 @@ namespace DuAnQA
                 // BƯỚC B & C: THÊM CHI TIẾT & TRỪ KHO (Loop)
                 foreach (var item in StaticData.DanhSachGioHang)
                 {
-                    // (Lấy MaSanPham, SoLuong, Gia từ item)
-
                     // BƯỚC B: Thêm vào ChiTietDonHang
                     string sqlChiTiet = "INSERT INTO ChiTietDonHang (MaDonHang, MaSanPham, SoLuong, DonGia) VALUES (@maDH, @maSP, @soLuong, @donGia)";
                     kn.ThucThi(sqlChiTiet, transaction,

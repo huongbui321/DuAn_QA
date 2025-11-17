@@ -112,6 +112,11 @@ namespace DuAnQA
 
         }
 
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
     }
 
 

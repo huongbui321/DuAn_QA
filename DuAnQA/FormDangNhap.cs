@@ -35,13 +35,27 @@ namespace DuAnQA
 
             if (tenDN == "" || matKhau == "")
             {
-                // ... (code báo thiếu thông tin)
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!" , "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             if (tenDN.Equals("admin", StringComparison.OrdinalIgnoreCase) && matKhau == "1")
             {
-                // ... (code đăng nhập admin)
+                // Thông báo đăng nhập thành công (tùy chọn)
+                MessageBox.Show("Đăng nhập thành công với tư cách Quản trị viên!");
+
+                // Ẩn form đăng nhập hiện tại
+                this.Hide();
+
+                // Khởi tạo và hiển thị FormQL_BanHang
+                FormQL_BanHang f_admin = new FormQL_BanHang();
+                f_admin.ShowDialog(); // Hiển thị form admin và chờ cho đến khi nó được đóng
+
+                // Sau khi form admin đóng, xóa mật khẩu và hiển thị lại form đăng nhập
+                txtMatKhau.Clear();
+                this.Show();
+
+                // Dừng thực thi hàm để không chạy code đăng nhập của người dùng thường
                 return;
             }
 

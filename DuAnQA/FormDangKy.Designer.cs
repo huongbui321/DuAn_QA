@@ -45,7 +45,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.HotPink;
+            label1.ForeColor = Color.PaleVioletRed;
             label1.ImageAlign = ContentAlignment.MiddleRight;
             label1.Location = new Point(430, 44);
             label1.Name = "label1";

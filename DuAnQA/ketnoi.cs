@@ -85,7 +85,7 @@ namespace DuAnQA
             return kq;
         }
 
-        // ✅ 3️⃣ Hàm lấy dữ liệu SELECT trả về DataTable
+        // ✅ 3️⃣ Hàm lấy dữ liệu SELECT trả về DataTable (Tự động Mở/Đóng)
         public DataTable LayDuLieu(string sql, params SqlParameter[] ts)
         {
             DataTable dt = new DataTable();
@@ -114,7 +114,65 @@ namespace DuAnQA
             return dt;
         }
 
-        // (Các hàm cũ của bạn)
+        // ==========================================================
+        // === 🚀 3 HÀM MỚI ĐƯỢC THÊM ĐỂ HỖ TRỢ TRANSACTION ===
+        // ==========================================================
+
+        /// <summary>
+        /// ✅ 2b. Hàm ThucThi (cho Transaction), KHÔNG tự Mở/Đóng kết nối.
+        /// </summary>
+        public int ThucThi(string sql, SqlTransaction tran, params SqlParameter[] ts)
+        {
+            // Dùng connection và transaction từ bên ngoài truyền vào
+            using (SqlCommand cmd = new SqlCommand(sql, tran.Connection, tran))
+            {
+                if (ts != null)
+                    cmd.Parameters.AddRange(ts);
+
+                return cmd.ExecuteNonQuery(); // Trả về số dòng bị ảnh hưởng
+            }
+        }
+
+        /// <summary>
+        /// ✅ 3b. Hàm LayDuLieu (cho Transaction), KHÔNG tự Mở/Đóng kết nối.
+        /// </summary>
+        public DataTable LayDuLieu(string sql, SqlTransaction tran, params SqlParameter[] ts)
+        {
+            DataTable dt = new DataTable();
+            // Dùng connection và transaction từ bên ngoài truyền vào
+            using (SqlCommand cmd = new SqlCommand(sql, tran.Connection, tran))
+            {
+                if (ts != null)
+                    cmd.Parameters.AddRange(ts);
+
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                }
+            }
+            return dt;
+        }
+
+        /// <summary>
+        /// ✅ 4b. Hàm ThucThiLayScalar (cho Transaction), KHÔNG tự Mở/Đóng kết nối.
+        /// Dùng để lấy giá trị đơn (như SCOPE_IDENTITY).
+        /// </summary>
+        public object ThucThiLayScalar(string sql, SqlTransaction tran, params SqlParameter[] ts)
+        {
+            // Dùng connection và transaction từ bên ngoài truyền vào
+            using (SqlCommand cmd = new SqlCommand(sql, tran.Connection, tran))
+            {
+                if (ts != null)
+                    cmd.Parameters.AddRange(ts);
+
+                return cmd.ExecuteScalar(); // Trả về 1 giá trị (object)
+            }
+        }
+
+        // ==========================================================
+        // === CÁC HÀM CŨ CỦA BẠN (Đã sửa LayLichSuMuaHang) ===
+        // ==========================================================
+
         public List<SanPham> LayDanhSachSanPham()
         {
             List<SanPham> ds = new List<SanPham>();
@@ -174,55 +232,27 @@ namespace DuAnQA
             return ds;
         }
 
-        // ==========================================================
-        // === 🚀 2 HÀM MỚI ĐƯỢC THÊM ĐỂ HỖ TRỢ TRANSACTION ===
-        // ==========================================================
-
-        /// <summary>
-        /// ✅ 2b. Hàm thực thi (dành cho Transaction)
-        /// Hàm này KHÔNG tự động Mở/Đóng kết nối, mà dùng Transaction có sẵn.
-        /// </summary>
-        public int ThucThi(string sql, SqlTransaction tran, params SqlParameter[] ts)
-        {
-            // Phải dùng connection và transaction từ bên ngoài truyền vào
-            using (SqlCommand cmd = new SqlCommand(sql, tran.Connection, tran))
-            {
-                if (ts != null)
-                    cmd.Parameters.AddRange(ts);
-
-                return cmd.ExecuteNonQuery();
-            }
-        }
-
+        // (Đã sửa lại câu SQL để lấy MaDonHang và TrangThai)
         public DataTable LayLichSuMuaHang(int maNguoiDung)
         {
-            // Câu SQL này JOIN 3 bảng: DonHang, ChiTietDonHang, và SanPham
             string sql = @"
-        SELECT 
-            T1.NgayDat AS [Ngày đặt],
-            T3.TenSanPham AS [Tên sản phẩm],
-            T2.SoLuong AS [Số lượng],
-            T2.DonGia AS [Đơn giá]
-        FROM DonHang AS T1
-        JOIN ChiTietDonHang AS T2 ON T1.MaDonHang = T2.MaDonHang
-        JOIN SanPham AS T3 ON T2.MaSanPham = T3.MaSanPham
-        WHERE
-            T1.MaNguoiDung = @maND
-        ORDER BY
-            T1.NgayDat DESC"; // Sắp xếp theo ngày mới nhất
+            SELECT 
+                T1.MaDonHang,        -- <<< Đã thêm
+                T1.TrangThai,      -- <<< Đã thêm
+                T1.NgayDat AS [Ngày đặt],
+                T3.TenSanPham AS [Tên sản phẩm],
+                T2.SoLuong AS [Số lượng],
+                T2.DonGia AS [Đơn giá]
+            FROM DonHang AS T1
+            JOIN ChiTietDonHang AS T2 ON T1.MaDonHang = T2.MaDonHang
+            JOIN SanPham AS T3 ON T2.MaSanPham = T3.MaSanPham
+            WHERE
+                T1.MaNguoiDung = @maND
+            ORDER BY
+                T1.NgayDat DESC";
 
-            // Dùng hàm LayDuLieu có sẵn của bạn
             return LayDuLieu(sql, new SqlParameter("@maND", maNguoiDung));
         }
-        public object ThucThiLayScalar(string sql, SqlTransaction tran, params SqlParameter[] ts)
-        {
-            using (SqlCommand cmd = new SqlCommand(sql, tran.Connection, tran))
-            {
-                if (ts != null)
-                    cmd.Parameters.AddRange(ts);
 
-                return cmd.ExecuteScalar();
-            }
-        }
-    }
-}
+    } // Kết thúc class KetNoi
+} // Kết thúc namespace DuAnQA

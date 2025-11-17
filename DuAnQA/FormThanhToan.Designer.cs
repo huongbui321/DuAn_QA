@@ -36,6 +36,7 @@
             sqlCommandBuilder1 = new Microsoft.Data.SqlClient.SqlCommandBuilder();
             label3 = new Label();
             lblTongTien = new Label();
+            btnThoat = new Button();
             ((System.ComponentModel.ISupportInitialize)picQR).BeginInit();
             SuspendLayout();
             // 
@@ -78,7 +79,7 @@
             // 
             // btnXacNhan
             // 
-            btnXacNhan.Location = new Point(299, 519);
+            btnXacNhan.Location = new Point(370, 529);
             btnXacNhan.Name = "btnXacNhan";
             btnXacNhan.Size = new Size(114, 36);
             btnXacNhan.TabIndex = 4;
@@ -110,12 +111,23 @@
             lblTongTien.TabIndex = 6;
             lblTongTien.Text = "label4";
             // 
+            // btnThoat
+            // 
+            btnThoat.Location = new Point(214, 529);
+            btnThoat.Name = "btnThoat";
+            btnThoat.Size = new Size(110, 36);
+            btnThoat.TabIndex = 7;
+            btnThoat.Text = "Thoát";
+            btnThoat.UseVisualStyleBackColor = true;
+            btnThoat.Click += btnThoat_Click;
+            // 
             // FormThanhToan
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
             ClientSize = new Size(712, 589);
+            Controls.Add(btnThoat);
             Controls.Add(lblTongTien);
             Controls.Add(label3);
             Controls.Add(btnXacNhan);
@@ -141,5 +153,6 @@
         private Microsoft.Data.SqlClient.SqlCommandBuilder sqlCommandBuilder1;
         private Label label3;
         private Label lblTongTien;
+        private Button btnThoat;
     }
 }

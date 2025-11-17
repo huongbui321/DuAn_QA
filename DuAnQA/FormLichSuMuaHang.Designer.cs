@@ -45,13 +45,15 @@
             dgvLichSu.RowTemplate.Height = 33;
             dgvLichSu.Size = new Size(1030, 497);
             dgvLichSu.TabIndex = 0;
+            dgvLichSu.CellContentClick += dgvLichSu_CellContentClick;
+            dgvLichSu.CellFormatting += dgvLichSu_CellFormatting;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.AliceBlue;
             label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.HotPink;
+            label1.ForeColor = Color.PaleVioletRed;
             label1.Location = new Point(447, 25);
             label1.Name = "label1";
             label1.Size = new Size(344, 45);
