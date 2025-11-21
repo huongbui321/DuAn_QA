@@ -20,9 +20,32 @@ namespace DuAnQA
         // === SỰ KIỆN LOAD FORM ===
         private void FormQL_BanHang_Load(object sender, EventArgs e)
         {
-            // Tải màn hình Quản lý Sản phẩm làm mặc định khi mở
-            // (Chúng ta sẽ kết nối nút này ở Bước tiếp theo)
-            btnQLSanPham_Click(null, null);
+            string vaiTro = StaticData.VaiTroHienTai;
+
+            // 2. Kiểm tra và Ẩn/Hiện các nút dựa trên vai trò
+            if (vaiTro == "NhanVien")
+            {
+                // --- NHÂN VIÊN ---
+                // Được phép: Bán hàng (Sản phẩm), Xem đơn hàng
+                btnQLSanPham.Visible = true;
+                btnQLDonHang.Visible = true;
+
+                // Bị cấm: Quản lý nhân sự, Kho, Thống kê tiền nong
+                btnQLTaiKhoan.Visible = false;
+                btnQLKho.Visible = false;      // (Tùy bạn: có thể cho xem nhưng không cho nhập xuất)
+                btnThongKe.Visible = false;
+            }
+            else
+            {
+                // --- ADMIN ---
+                // Được phép tất cả
+                btnQLSanPham.Visible = true;
+                btnQLDonHang.Visible = true;
+                btnQLTaiKhoan.Visible = true;
+                btnQLKho.Visible = true;
+                btnThongKe.Visible = true;
+            }
+           
         }
 
         // === HÀM DÙNG CHUNG ĐỂ TẢI USER CONTROL ===
@@ -30,9 +53,12 @@ namespace DuAnQA
         {
             // (Giả sử panel nội dung màu xanh của bạn tên là pnContent)
             // Nếu nó có tên khác, hãy đổi chữ 'pnContent'
-            pnContent.Controls.Clear(); // Xóa control cũ
-            uc.Dock = DockStyle.Fill;   // Cho control mới lấp đầy
-            pnContent.Controls.Add(uc); // Thêm control mới vào
+            pnContent.BackgroundImage = null;
+
+            // 2. Xóa control cũ và thêm mới
+            pnContent.Controls.Clear();
+            uc.Dock = DockStyle.Fill;
+            pnContent.Controls.Add(uc);
         }
 
         // ===================================================

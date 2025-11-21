@@ -189,19 +189,24 @@ namespace DuAnQA
 
         private void btnX_Click(object sender, EventArgs e)
         {
+            // 1. Kiểm tra xem đã chọn dòng nào chưa
             if (string.IsNullOrEmpty(currentMaNguoiDung))
             {
                 MessageBox.Show("Vui lòng chọn một tài khoản để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // Cảnh báo quan trọng: Không nên XÓA cứng
-            var result = MessageBox.Show($"Bạn có chắc muốn XÓA tài khoản '{txtTenDangNhap.Text}'?\n" +
-                      "VIỆC NÀY SẼ LÀM MẤT LIÊN KẾT ĐƠN HÀNG!\n" +
-                      "Bạn nên dùng chức năng 'Đã khóa' thay vì Xóa.",
-                      "CẢNH BÁO NGHIÊM TRỌNG",
-                      MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            // 2. Tạo biến 'result' để lưu lựa chọn Yes/No của người dùng
+            // (Đây là dòng bạn bị thiếu)
+            DialogResult result = MessageBox.Show(
+                $"Bạn có chắc muốn XÓA tài khoản '{txtTenDangNhap.Text}'?\n\n" +
+                "LƯU Ý: Nếu tài khoản này đã từng bán hàng, bạn sẽ không thể xóa.\n" +
+                "Thay vào đó, hãy chuyển trạng thái sang 'Đã khóa'.",
+                "CẢNH BÁO XÓA",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
 
+            // 3. Kiểm tra biến 'result'
             if (result == DialogResult.Yes)
             {
                 try
@@ -211,8 +216,25 @@ namespace DuAnQA
                     kn.ThucThi(query, param);
 
                     MessageBox.Show("Đã xóa tài khoản thành công.", "Hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadData(); // Tải lại lưới
-                    btnLM_Click(sender, e); // Dọn dẹp
+                    LoadData();
+                    btnLM_Click(sender, e);
+                }
+                catch (SqlException sqlEx)
+                {
+                    // Bắt lỗi 547 (Lỗi khóa ngoại - Đã có đơn hàng)
+                    if (sqlEx.Number == 547)
+                    {
+                        MessageBox.Show(
+                            "KHÔNG THỂ XÓA tài khoản này vì họ đã có lịch sử bán hàng!\n\n" +
+                            "Giải pháp: Hãy chọn dòng này, bấm Sửa, và đổi Trạng thái thành 'Đã khóa'.",
+                            "Bảo vệ dữ liệu",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Stop);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Lỗi SQL khi xóa: " + sqlEx.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 catch (Exception ex)
                 {

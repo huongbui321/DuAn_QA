@@ -28,176 +28,224 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label2 = new Label();
-            label3 = new Label();
             txtTenDN = new TextBox();
             txtMatKhau = new TextBox();
-            label1 = new Label();
-            btnDangNhap = new Button();
-            linkQuenMK = new LinkLabel();
-            linkDangKy = new LinkLabel();
+            panel2 = new Panel();
+            label5 = new Label();
+            pictureBox1 = new PictureBox();
+            panel3 = new Panel();
+            chkHienMatKhau = new CheckBox();
+            panel4 = new Panel();
             panel1 = new Panel();
-            btnMat = new Button();
-            label4 = new Label();
-            panel1.SuspendLayout();
+            btnDangNhap = new RButton();
+            lblThoat = new Label();
+            label8 = new Label();
+            label7 = new Label();
+            label6 = new Label();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel3.SuspendLayout();
             SuspendLayout();
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.BackColor = Color.LavenderBlush;
-            label2.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.ForeColor = Color.DarkSlateGray;
-            label2.Location = new Point(46, 130);
-            label2.Name = "label2";
-            label2.Size = new Size(111, 30);
-            label2.TabIndex = 1;
-            label2.Text = "Tài khoản";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.BackColor = Color.LavenderBlush;
-            label3.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = Color.DarkSlateGray;
-            label3.Location = new Point(46, 262);
-            label3.Name = "label3";
-            label3.Size = new Size(111, 30);
-            label3.TabIndex = 2;
-            label3.Text = "Mật khẩu";
             // 
             // txtTenDN
             // 
-            txtTenDN.Location = new Point(46, 176);
+            txtTenDN.BorderStyle = BorderStyle.None;
+            txtTenDN.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            txtTenDN.Location = new Point(211, 178);
+            txtTenDN.Margin = new Padding(3, 4, 3, 4);
             txtTenDN.Name = "txtTenDN";
-            txtTenDN.Size = new Size(549, 31);
+            txtTenDN.Size = new Size(285, 27);
             txtTenDN.TabIndex = 3;
             // 
             // txtMatKhau
             // 
-            txtMatKhau.Location = new Point(46, 307);
+            txtMatKhau.BorderStyle = BorderStyle.None;
+            txtMatKhau.Location = new Point(211, 259);
+            txtMatKhau.Margin = new Padding(3, 4, 3, 4);
             txtMatKhau.Name = "txtMatKhau";
-            txtMatKhau.Size = new Size(549, 31);
+            txtMatKhau.Size = new Size(285, 27);
             txtMatKhau.TabIndex = 4;
             // 
-            // label1
+            // panel2
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.PaleVioletRed;
-            label1.Location = new Point(128, 49);
-            label1.Name = "label1";
-            label1.Size = new Size(450, 45);
-            label1.TabIndex = 0;
-            label1.Text = "Huongie clothes xin chào!";
+            panel2.BackColor = Color.DarkSlateGray;
+            panel2.Controls.Add(label5);
+            panel2.Controls.Add(pictureBox1);
+            panel2.Dock = DockStyle.Left;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(300, 500);
+            panel2.TabIndex = 6;
             // 
-            // btnDangNhap
+            // label5
             // 
-            btnDangNhap.BackColor = Color.LavenderBlush;
-            btnDangNhap.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnDangNhap.ForeColor = Color.Black;
-            btnDangNhap.Location = new Point(296, 394);
-            btnDangNhap.Name = "btnDangNhap";
-            btnDangNhap.Size = new Size(112, 34);
-            btnDangNhap.TabIndex = 0;
-            btnDangNhap.Text = "Đăng nhập";
-            btnDangNhap.UseVisualStyleBackColor = false;
-            btnDangNhap.Click += btnDangNhap_Click;
+            label5.AutoSize = true;
+            label5.Font = new Font("Century Gothic", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            label5.ForeColor = Color.White;
+            label5.Location = new Point(38, 387);
+            label5.Name = "label5";
+            label5.Size = new Size(211, 30);
+            label5.TabIndex = 1;
+            label5.Text = "Huongie Clothes";
+            label5.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // linkQuenMK
+            // pictureBox1
             // 
-            linkQuenMK.AutoSize = true;
-            linkQuenMK.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            linkQuenMK.ForeColor = Color.DarkSlateGray;
-            linkQuenMK.LinkColor = Color.DarkSlateGray;
-            linkQuenMK.Location = new Point(55, 359);
-            linkQuenMK.Name = "linkQuenMK";
-            linkQuenMK.Size = new Size(147, 25);
-            linkQuenMK.TabIndex = 2;
-            linkQuenMK.TabStop = true;
-            linkQuenMK.Text = "Quên mật khẩu?";
-            linkQuenMK.LinkClicked += linkQuenMK_LinkClicked;
+            pictureBox1.Image = Properties.Resources.logomoi;
+            pictureBox1.Location = new Point(21, 89);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(253, 261);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
-            // linkDangKy
+            // panel3
             // 
-            linkDangKy.AutoSize = true;
-            linkDangKy.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            linkDangKy.LinkColor = Color.Black;
-            linkDangKy.Location = new Point(414, 442);
-            linkDangKy.Name = "linkDangKy";
-            linkDangKy.Size = new Size(79, 25);
-            linkDangKy.TabIndex = 3;
-            linkDangKy.TabStop = true;
-            linkDangKy.Text = "Đăng ký";
-            linkDangKy.LinkClicked += linkDangKy_LinkClicked;
+            panel3.BackColor = Color.White;
+            panel3.Controls.Add(chkHienMatKhau);
+            panel3.Controls.Add(panel4);
+            panel3.Controls.Add(panel1);
+            panel3.Controls.Add(btnDangNhap);
+            panel3.Controls.Add(lblThoat);
+            panel3.Controls.Add(label8);
+            panel3.Controls.Add(txtMatKhau);
+            panel3.Controls.Add(txtTenDN);
+            panel3.Controls.Add(label7);
+            panel3.Controls.Add(label6);
+            panel3.Dock = DockStyle.Fill;
+            panel3.Location = new Point(300, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(550, 500);
+            panel3.TabIndex = 7;
+            panel3.Paint += panel3_Paint;
+            // 
+            // chkHienMatKhau
+            // 
+            chkHienMatKhau.AutoSize = true;
+            chkHienMatKhau.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            chkHienMatKhau.ForeColor = Color.DarkSlateGray;
+            chkHienMatKhau.Location = new Point(314, 334);
+            chkHienMatKhau.Name = "chkHienMatKhau";
+            chkHienMatKhau.Size = new Size(182, 29);
+            chkHienMatKhau.TabIndex = 11;
+            chkHienMatKhau.Text = "Ẩn/Hiện mật khẩu";
+            chkHienMatKhau.UseVisualStyleBackColor = true;
+            chkHienMatKhau.CheckedChanged += chkHienMatKhau_CheckedChanged;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.DarkSlateGray;
+            panel4.ForeColor = Color.SlateGray;
+            panel4.Location = new Point(211, 289);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(280, 2);
+            panel4.TabIndex = 10;
             // 
             // panel1
             // 
-            panel1.BackColor = Color.LavenderBlush;
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(txtTenDN);
-            panel1.Controls.Add(txtMatKhau);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(btnMat);
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(linkDangKy);
-            panel1.Controls.Add(linkQuenMK);
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(btnDangNhap);
-            panel1.Location = new Point(264, 83);
+            panel1.BackColor = Color.DarkSlateGray;
+            panel1.Location = new Point(211, 211);
             panel1.Name = "panel1";
-            panel1.Size = new Size(693, 501);
-            panel1.TabIndex = 5;
+            panel1.Size = new Size(280, 2);
+            panel1.TabIndex = 9;
             // 
-            // btnMat
+            // btnDangNhap
             // 
-            btnMat.Location = new Point(601, 307);
-            btnMat.Name = "btnMat";
-            btnMat.Size = new Size(48, 34);
-            btnMat.TabIndex = 5;
-            btnMat.Text = "👁️";
-            btnMat.UseVisualStyleBackColor = true;
-            btnMat.Click += btnMat_Click;
+            btnDangNhap.BackColor = Color.DarkSlateGray;
+            btnDangNhap.BorderColor = null;
+            btnDangNhap.BorderRadius = 30;
+            btnDangNhap.FlatAppearance.BorderSize = 0;
+            btnDangNhap.FlatStyle = FlatStyle.Flat;
+            btnDangNhap.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnDangNhap.ForeColor = Color.White;
+            btnDangNhap.Location = new Point(175, 405);
+            btnDangNhap.Name = "btnDangNhap";
+            btnDangNhap.Size = new Size(208, 41);
+            btnDangNhap.TabIndex = 8;
+            btnDangNhap.Text = "Đăng nhập";
+            btnDangNhap.UseVisualStyleBackColor = false;
+            btnDangNhap.Click += btnDangNhap_Click_1;
             // 
-            // label4
+            // lblThoat
             // 
-            label4.AutoSize = true;
-            label4.ForeColor = Color.DarkSlateGray;
-            label4.Location = new Point(209, 442);
-            label4.Name = "label4";
-            label4.Size = new Size(199, 25);
-            label4.TabIndex = 4;
-            label4.Text = "Bạn chưa có tài khoản ?";
+            lblThoat.AutoSize = true;
+            lblThoat.ForeColor = Color.DarkSlateGray;
+            lblThoat.Location = new Point(499, 9);
+            lblThoat.Name = "lblThoat";
+            lblThoat.Size = new Size(39, 28);
+            lblThoat.TabIndex = 7;
+            lblThoat.Text = "❌";
+            lblThoat.Click += lblThoat_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.ForeColor = Color.DarkSlateGray;
+            label8.Location = new Point(56, 263);
+            label8.Name = "label8";
+            label8.Size = new Size(108, 28);
+            label8.TabIndex = 6;
+            label8.Text = "Mật khẩu : ";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.ForeColor = Color.DarkSlateGray;
+            label7.Location = new Point(56, 185);
+            label7.Name = "label7";
+            label7.Size = new Size(149, 28);
+            label7.TabIndex = 1;
+            label7.Text = "Tên đăng nhập :";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.BackColor = Color.White;
+            label6.Font = new Font("Century Gothic", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            label6.ForeColor = Color.DarkSlateGray;
+            label6.Location = new Point(195, 89);
+            label6.Name = "label6";
+            label6.Size = new Size(147, 47);
+            label6.TabIndex = 0;
+            label6.Text = "LOGIN";
             // 
             // FormDangNhap
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(11F, 28F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
-            ClientSize = new Size(1203, 664);
-            Controls.Add(panel1);
+            ClientSize = new Size(850, 500);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
+            Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormDangNhap";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FormDangNhap";
+            Text = "Hệ thống đăng nhập";
             Load += FormDangNhap_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
-        private Label label2;
-        private Label label3;
         private TextBox txtTenDN;
         private TextBox txtMatKhau;
-        private Label label1;
-        private Button btnDangNhap;
-        private LinkLabel linkQuenMK;
-        private LinkLabel linkDangKy;
+        private Panel panel2;
+        private PictureBox pictureBox1;
+        private Label label5;
+        private Panel panel3;
+        private Label label6;
+        private Label label7;
+        private Label label8;
+        private Label lblThoat;
         private Panel panel1;
-        private Label label4;
-        private Button btnMat;
+        private RButton btnDangNhap;
+        private Panel panel4;
+        private CheckBox chkHienMatKhau;
     }
 }
