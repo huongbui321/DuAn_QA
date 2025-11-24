@@ -155,6 +155,7 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormTTKH";
             Text = "FormTTKH";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

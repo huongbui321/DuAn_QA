@@ -150,63 +150,111 @@ namespace DuAnQA
         private Panel TaoPanelSanPham(SanPham sp)
         {
             Panel pnlSP = new Panel();
-            pnlSP.Width = 200;
-            pnlSP.Height = 280;
-            pnlSP.BackColor = Color.MistyRose;
-            pnlSP.Margin = new Padding(10);
-            pnlSP.Cursor = Cursors.Hand;
+            pnlSP.Width = 310;   // Tăng mạnh chiều rộng (Cũ: 255)
+            pnlSP.Height = 480;  // Tăng chiều cao (Cũ: 380)
+            pnlSP.BackColor = Color.MistyRose; // Giữ nguyên màu
+            pnlSP.Margin = new Padding(20);    // Tăng khoảng cách viền (Margin) lên 20 cho thoáng
+            pnlSP.Tag = sp;
 
-            // Ảnh sản phẩm
+            // 2. ẢNH SẢN PHẨM
             PictureBox pic = new PictureBox();
             pic.SizeMode = PictureBoxSizeMode.Zoom;
             string duongDan = Path.Combine(Application.StartupPath, sp.HinhAnh ?? "");
             if (File.Exists(duongDan))
                 pic.Image = Image.FromFile(duongDan);
-            pic.Width = 180;
-            pic.Height = 180;
+
+            // Ảnh vuông to: (310 - 20 padding) = 290
+            pic.Width = 290;
+            pic.Height = 290;
             pic.Top = 10;
             pic.Left = 10;
             pic.Cursor = Cursors.Hand;
+            pic.Click += (s, e) => MoChiTietSanPham(pnlSP, e);
 
-            // Tên sản phẩm
+            // 3. TÊN SẢN PHẨM
             Label lblTen = new Label();
             lblTen.Text = sp.TenSanPham;
-            lblTen.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+            lblTen.Font = new Font("Segoe UI", 12, FontStyle.Bold); // Tăng font lên 12
             lblTen.ForeColor = Color.DeepPink;
             lblTen.AutoSize = false;
             lblTen.TextAlign = ContentAlignment.MiddleCenter;
-            lblTen.Width = pnlSP.Width - 10;
-            lblTen.Height = 36;
+            lblTen.Width = 290;
+            lblTen.Height = 50; // Cho 2 dòng thoải mái
             lblTen.Top = pic.Bottom + 5;
-            lblTen.Left = (pnlSP.Width - lblTen.Width) / 2;
-            lblTen.Cursor = Cursors.Hand;
+            lblTen.Left = 10;
+            lblTen.Click += (s, e) => MoChiTietSanPham(pnlSP, e);
 
-            // Giá sản phẩm
+            // 4. GIÁ SẢN PHẨM
             Label lblGia = new Label();
             lblGia.Text = sp.Gia.ToString("N0") + " VNĐ";
             lblGia.ForeColor = Color.HotPink;
-            lblGia.Font = new Font("Segoe UI", 9, FontStyle.Regular);
+            lblGia.Font = new Font("Segoe UI", 12, FontStyle.Bold); // Tăng font lên 12
             lblGia.AutoSize = false;
             lblGia.TextAlign = ContentAlignment.MiddleCenter;
-            lblGia.Width = pnlSP.Width - 10;
-            lblGia.Height = 24;
-            lblGia.Top = lblTen.Bottom + 2;
-            lblGia.Left = (pnlSP.Width - lblGia.Width) / 2;
-            lblGia.Cursor = Cursors.Hand;
+            lblGia.Width = 290;
+            lblGia.Height = 30;
+            lblGia.Top = lblTen.Bottom;
+            lblGia.Left = 10;
 
-            // Gắn sản phẩm vào panel
-            pnlSP.Tag = sp;
+            // --- 5. KHU VỰC CHỌN SIZE & SỐ LƯỢNG ---
+            int controlY = lblGia.Bottom + 10;
 
-            // Gắn sự kiện mở chi tiết
-            pnlSP.Click += MoChiTietSanPham;
-            pic.Click += MoChiTietSanPham;
-            lblTen.Click += MoChiTietSanPham;
-            lblGia.Click += MoChiTietSanPham;
+            // Label "Size"
+            Label lblS = new Label();
+            lblS.Text = "Size:"; lblS.AutoSize = true;
+            lblS.Font = new Font("Segoe UI", 9); // Tăng font
+            lblS.Top = controlY + 3;
+            lblS.Left = 30; // Căn lề trái rộng hơn
 
-            // Thêm control con
+            // ComboBox chọn Size
+            ComboBox cboSize = new ComboBox();
+            cboSize.Items.AddRange(new object[] { "S", "M", "L", "XL" });
+            cboSize.SelectedIndex = 0;
+            cboSize.Width = 55;
+            cboSize.Font = new Font("Segoe UI", 9);
+            cboSize.DropDownStyle = ComboBoxStyle.DropDownList;
+            cboSize.Top = controlY;
+            cboSize.Left = 75;
+            cboSize.Name = "cboSize";
+
+            // Label "SL"
+            Label lblQ = new Label();
+            lblQ.Text = "SL:"; lblQ.AutoSize = true;
+            lblQ.Font = new Font("Segoe UI", 9);
+            lblQ.Top = controlY + 3;
+            lblQ.Left = 160;
+
+            // Numeric chọn Số lượng
+            NumericUpDown numSL = new NumericUpDown();
+            numSL.Minimum = 1; numSL.Maximum = 100; numSL.Value = 1;
+            numSL.Width = 55;
+            numSL.Font = new Font("Segoe UI", 9);
+            numSL.Top = controlY;
+            numSL.Left = 195;
+            numSL.Name = "numSL";
+
+            // --- 6. CHECKBOX "CHỌN MUA" ---
+            CheckBox chkChon = new CheckBox();
+            chkChon.Text = "Chọn mua";
+            chkChon.Name = "chkChonMua";
+            chkChon.Font = new Font("Segoe UI", 11); // Tăng font
+            chkChon.ForeColor = Color.Black;
+            chkChon.AutoSize = true;
+            chkChon.Tag = sp;
+
+            // Căn giữa: (310 - 100) / 2 = 105
+            chkChon.Left = 100;
+            chkChon.Top = cboSize.Bottom + 10;
+
+            // Thêm control con vào Panel
             pnlSP.Controls.Add(pic);
             pnlSP.Controls.Add(lblTen);
             pnlSP.Controls.Add(lblGia);
+            pnlSP.Controls.Add(lblS);
+            pnlSP.Controls.Add(cboSize);
+            pnlSP.Controls.Add(lblQ);
+            pnlSP.Controls.Add(numSL);
+            pnlSP.Controls.Add(chkChon);
 
             return pnlSP;
         }
@@ -354,6 +402,93 @@ namespace DuAnQA
             FormLichSuMuaHang fLichSu = new FormLichSuMuaHang(StaticData.MaNguoiDungHienTai);
             fLichSu.StartPosition = FormStartPosition.CenterParent;
             fLichSu.ShowDialog(this);
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnMuaNhieu_Click(object sender, EventArgs e)
+        {
+            int demSanPham = 0;
+
+            // 1. DUYỆT VÀ THÊM VÀO GIỎ
+            foreach (Control ctrlPnl in flowSanPham.Controls)
+            {
+                if (ctrlPnl is Panel pnl)
+                {
+                    // Tìm các control con
+                    CheckBox chk = pnl.Controls["chkChonMua"] as CheckBox;
+                    ComboBox cbo = pnl.Controls["cboSize"] as ComboBox;
+                    NumericUpDown num = pnl.Controls["numSL"] as NumericUpDown;
+
+                    // Nếu tìm thấy và được tích
+                    if (chk != null && cbo != null && num != null && chk.Checked)
+                    {
+                        if (chk.Tag is SanPham sp)
+                        {
+                            string selectedSize = cbo.SelectedItem.ToString();
+                            int selectedQty = (int)num.Value;
+
+                            // Thêm vào giỏ hàng
+                            ThemVaoGioHang(sp, selectedQty, selectedSize);
+                            demSanPham++;
+                        }
+                    }
+                }
+            }
+
+            // 2. XỬ LÝ SAU KHI THÊM
+            if (demSanPham > 0)
+            {
+                // --- THAY ĐỔI Ở ĐÂY: KHÔNG HIỆN MESSAGEBOX NỮA ---
+
+                // Mở luôn Form Giỏ hàng
+                FormGioHang f = new FormGioHang();
+                f.StartPosition = FormStartPosition.CenterParent;
+
+                // ShowDialog sẽ dừng code ở đây cho đến khi bạn đóng Form Giỏ hàng
+                DialogResult result = f.ShowDialog(this);
+
+                // 3. SAU KHI ĐÓNG GIỎ HÀNG -> RESET GIAO DIỆN
+                // Hàm này sẽ xóa hết các panel cũ và vẽ lại mới -> Mất hết các dấu tích đã chọn
+                TaiLaiDuLieuSanPham();
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa tích chọn sản phẩm nào cả!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // Hàm hỗ trợ thêm vào giỏ (Tách riêng cho gọn)
+        private void ThemVaoGioHang(SanPham sp, int soLuong, string size)
+        {
+            // Kiểm tra xem đã có trong giỏ chưa (cùng ID và cùng Size)
+            var spTonTai = StaticData.DanhSachGioHang
+                .FirstOrDefault(x => x.MaSanPham == sp.MaSanPham && x.Size == size);
+
+            if (spTonTai != null)
+            {
+                spTonTai.SoLuong += soLuong;
+            }
+            else
+            {
+                StaticData.DanhSachGioHang.Add(new GioHang
+                {
+                    MaSanPham = sp.MaSanPham,
+                    TenSP = sp.TenSanPham,
+                    Gia = sp.Gia,
+                    HinhAnh = sp.HinhAnh,
+                    Size = size, // Size mặc định
+                    SoLuong = soLuong
+                });
+            }
         }
     }
 }

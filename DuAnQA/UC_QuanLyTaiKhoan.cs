@@ -57,7 +57,7 @@ namespace DuAnQA
             // Tải ComboBox Vai Trò (Chức năng 4)
             cboVaiTro.Items.Clear();
             cboVaiTro.Items.Add("Admin");
-            cboVaiTro.Items.Add("Khách hàng");
+            cboVaiTro.Items.Add("NhanVien");
             cboVaiTro.SelectedIndex = -1;
 
             // Tải ComboBox Trạng Thái (Chức năng 5)
@@ -348,6 +348,16 @@ namespace DuAnQA
             SetControlsState(true); // Mở khóa các control
 
             txtHoTen.Focus();
+        }
+
+        private void cboTrangThai_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cboVaiTro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

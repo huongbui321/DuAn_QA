@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             panel1 = new Panel();
             lblTongDoanhThu = new Label();
             label1 = new Label();
@@ -74,11 +74,10 @@
             panel1.BackColor = Color.FromArgb(255, 192, 192);
             panel1.Controls.Add(lblTongDoanhThu);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(54, 77);
+            panel1.Location = new Point(219, 88);
             panel1.Name = "panel1";
             panel1.Size = new Size(193, 69);
             panel1.TabIndex = 0;
-           // panel1.Paint += this.panel1_Paint;
             // 
             // lblTongDoanhThu
             // 
@@ -105,11 +104,10 @@
             panel2.BackColor = Color.FromArgb(192, 255, 192);
             panel2.Controls.Add(lblTongDonHang);
             panel2.Controls.Add(label3);
-            panel2.Location = new Point(271, 77);
+            panel2.Location = new Point(494, 88);
             panel2.Name = "panel2";
             panel2.Size = new Size(193, 69);
             panel2.TabIndex = 1;
-           // panel2.Paint += this.panel2_Paint;
             // 
             // lblTongDonHang
             // 
@@ -136,7 +134,7 @@
             panel3.BackColor = Color.FromArgb(192, 255, 255);
             panel3.Controls.Add(lblTongKhachHang);
             panel3.Controls.Add(label5);
-            panel3.Location = new Point(488, 77);
+            panel3.Location = new Point(764, 88);
             panel3.Name = "panel3";
             panel3.Size = new Size(193, 69);
             panel3.TabIndex = 2;
@@ -167,18 +165,18 @@
             panel4.BackColor = Color.FromArgb(255, 224, 192);
             panel4.Controls.Add(lblTongTonKho);
             panel4.Controls.Add(label7);
-            panel4.Location = new Point(705, 77);
+            panel4.Location = new Point(1032, 87);
             panel4.Name = "panel4";
-            panel4.Size = new Size(193, 69);
+            panel4.Size = new Size(198, 72);
             panel4.TabIndex = 3;
             panel4.Paint += panel4_Paint;
             // 
             // lblTongTonKho
             // 
             lblTongTonKho.Font = new Font("Segoe UI", 11F, FontStyle.Bold, GraphicsUnit.Point);
-            lblTongTonKho.Location = new Point(13, 37);
+            lblTongTonKho.Location = new Point(8, 37);
             lblTongTonKho.Name = "lblTongTonKho";
-            lblTongTonKho.Size = new Size(180, 31);
+            lblTongTonKho.Size = new Size(185, 34);
             lblTongTonKho.TabIndex = 1;
             lblTongTonKho.Text = "0";
             lblTongTonKho.TextAlign = ContentAlignment.MiddleCenter;
@@ -195,33 +193,33 @@
             // 
             // chartDoanhThu
             // 
-            chartArea9.Name = "ChartArea1";
-            chartDoanhThu.ChartAreas.Add(chartArea9);
-            legend9.Name = "Legend1";
-            chartDoanhThu.Legends.Add(legend9);
+            chartArea1.Name = "ChartArea1";
+            chartDoanhThu.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chartDoanhThu.Legends.Add(legend1);
             chartDoanhThu.Location = new Point(71, 24);
             chartDoanhThu.Name = "chartDoanhThu";
-            series9.ChartArea = "ChartArea1";
-            series9.Legend = "Legend1";
-            series9.Name = "Series1";
-            chartDoanhThu.Series.Add(series9);
-            chartDoanhThu.Size = new Size(297, 162);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chartDoanhThu.Series.Add(series1);
+            chartDoanhThu.Size = new Size(328, 209);
             chartDoanhThu.TabIndex = 4;
             chartDoanhThu.Text = "Biểu đồ Doanh thu";
             // 
             // chartTrangThai
             // 
-            chartArea10.Name = "ChartArea1";
-            chartTrangThai.ChartAreas.Add(chartArea10);
-            legend10.Name = "Legend1";
-            chartTrangThai.Legends.Add(legend10);
-            chartTrangThai.Location = new Point(515, 24);
+            chartArea2.Name = "ChartArea1";
+            chartTrangThai.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            chartTrangThai.Legends.Add(legend2);
+            chartTrangThai.Location = new Point(499, 24);
             chartTrangThai.Name = "chartTrangThai";
-            series10.ChartArea = "ChartArea1";
-            series10.Legend = "Legend1";
-            series10.Name = "Series1";
-            chartTrangThai.Series.Add(series10);
-            chartTrangThai.Size = new Size(297, 162);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            chartTrangThai.Series.Add(series2);
+            chartTrangThai.Size = new Size(313, 209);
             chartTrangThai.TabIndex = 5;
             chartTrangThai.Text = "Biểu đồ Trạng thái";
             // 
@@ -236,7 +234,7 @@
             dgvTopSanPham.ReadOnly = true;
             dgvTopSanPham.RowHeadersWidth = 51;
             dgvTopSanPham.RowTemplate.Height = 29;
-            dgvTopSanPham.Size = new Size(423, 91);
+            dgvTopSanPham.Size = new Size(583, 304);
             dgvTopSanPham.TabIndex = 6;
             // 
             // dgvTopKhachHang
@@ -250,13 +248,13 @@
             dgvTopKhachHang.ReadOnly = true;
             dgvTopKhachHang.RowHeadersWidth = 51;
             dgvTopKhachHang.RowTemplate.Height = 29;
-            dgvTopKhachHang.Size = new Size(423, 91);
+            dgvTopKhachHang.Size = new Size(680, 301);
             dgvTopKhachHang.TabIndex = 7;
             // 
             // btnXuatExcel
             // 
             btnXuatExcel.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            btnXuatExcel.Location = new Point(374, 110);
+            btnXuatExcel.Location = new Point(1145, 310);
             btnXuatExcel.Name = "btnXuatExcel";
             btnXuatExcel.Size = new Size(135, 60);
             btnXuatExcel.TabIndex = 8;
@@ -268,10 +266,9 @@
             // 
             groupBox1.Controls.Add(chartDoanhThu);
             groupBox1.Controls.Add(chartTrangThai);
-            groupBox1.Controls.Add(btnXuatExcel);
-            groupBox1.Location = new Point(44, 183);
+            groupBox1.Location = new Point(219, 184);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(866, 192);
+            groupBox1.Size = new Size(866, 239);
             groupBox1.TabIndex = 12;
             groupBox1.TabStop = false;
             groupBox1.Text = "Doanh thu 7 ngày qua";
@@ -279,9 +276,9 @@
             // groupBox2
             // 
             groupBox2.Controls.Add(dgvTopSanPham);
-            groupBox2.Location = new Point(44, 382);
+            groupBox2.Location = new Point(44, 429);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(429, 121);
+            groupBox2.Size = new Size(589, 334);
             groupBox2.TabIndex = 13;
             groupBox2.TabStop = false;
             groupBox2.Text = "Top 5 sản phẩm bán chạy ";
@@ -289,9 +286,9 @@
             // groupBox3
             // 
             groupBox3.Controls.Add(dgvTopKhachHang);
-            groupBox3.Location = new Point(485, 382);
+            groupBox3.Location = new Point(680, 429);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(429, 121);
+            groupBox3.Size = new Size(686, 331);
             groupBox3.TabIndex = 14;
             groupBox3.TabStop = false;
             groupBox3.Text = "Top 5 KH chi nhiều";
@@ -306,11 +303,11 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Times New Roman", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = Color.DimGray;
-            label2.Location = new Point(321, 21);
+            label2.Location = new Point(586, 21);
             label2.Name = "label2";
-            label2.Size = new Size(312, 41);
+            label2.Size = new Size(345, 45);
             label2.TabIndex = 15;
             label2.Text = "Thống kê - Báo cáo";
             // 
@@ -321,6 +318,7 @@
             BackColor = Color.AliceBlue;
             Controls.Add(label2);
             Controls.Add(groupBox3);
+            Controls.Add(btnXuatExcel);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(panel4);
@@ -329,7 +327,7 @@
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Name = "UC_ThongKe";
-            Size = new Size(937, 503);
+            Size = new Size(1418, 778);
             Load += UC_ThongKe_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

@@ -35,7 +35,7 @@ namespace DuAnQA
                 // Tùy chỉnh tên cột (nếu bạn muốn)
                 dgvDonHang.Columns["MaDonHang"].HeaderText = "Mã ĐH";
                 dgvDonHang.Columns["NgayDat"].HeaderText = "Ngày Đặt";
-                dgvDonHang.Columns["MaNguoiDung"].HeaderText = "Mã KH";
+                dgvDonHang.Columns["MaNguoiDung"].HeaderText = "Mã NV";
                 dgvDonHang.Columns["TongTien"].HeaderText = "Tổng Tiền";
                 dgvDonHang.Columns["TrangThai"].HeaderText = "Trạng Thái";
             }
@@ -93,7 +93,7 @@ namespace DuAnQA
                 // <<< PHẦN LÀM ĐẸP (Thêm code này vào) >>>
 
                 // 1. Đặt tên tiêu đề (Header)
-                dgvChiTiet.Columns["HoTen"].HeaderText = "Tên KH";
+                dgvChiTiet.Columns["HoTen"].HeaderText = "Tên NV";
                 dgvChiTiet.Columns["TenSanPham"].HeaderText = "Tên SP";
                 dgvChiTiet.Columns["SoLuong"].HeaderText = "SL";
                 dgvChiTiet.Columns["DonGia"].HeaderText = "Đơn Giá";
@@ -126,6 +126,11 @@ namespace DuAnQA
             {
                 MessageBox.Show("Lỗi khi tải chi tiết đơn hàng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void dgvChiTiet_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

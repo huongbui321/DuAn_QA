@@ -48,7 +48,6 @@
             btnLuu = new Button();
             btnThem = new Button();
             label8 = new Label();
-            sqlCommand1 = new Microsoft.Data.SqlClient.SqlCommand();
             label9 = new Label();
             groupBox2 = new GroupBox();
             btnSua = new Button();
@@ -71,7 +70,7 @@
             dgvTaiKhoan.RowHeadersWidth = 51;
             dgvTaiKhoan.RowTemplate.Height = 24;
             dgvTaiKhoan.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvTaiKhoan.Size = new Size(482, 245);
+            dgvTaiKhoan.Size = new Size(950, 560);
             dgvTaiKhoan.TabIndex = 12;
             dgvTaiKhoan.CellClick += dgvTaiKhoan_CellContentClick;
             dgvTaiKhoan.CellContentClick += dgvTaiKhoan_CellContentClick;
@@ -82,7 +81,7 @@
             txtTimKiem.Location = new Point(118, 52);
             txtTimKiem.Margin = new Padding(3, 4, 3, 4);
             txtTimKiem.Name = "txtTimKiem";
-            txtTimKiem.Size = new Size(346, 31);
+            txtTimKiem.Size = new Size(814, 31);
             txtTimKiem.TabIndex = 11;
             txtTimKiem.TextChanged += txtTimKiem_TextChanged;
             // 
@@ -108,7 +107,7 @@
             groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(3, 4, 3, 4);
-            groupBox1.Size = new Size(393, 363);
+            groupBox1.Size = new Size(345, 528);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin tài khoản";
@@ -117,51 +116,53 @@
             // 
             cboTrangThai.DropDownStyle = ComboBoxStyle.DropDownList;
             cboTrangThai.FormattingEnabled = true;
-            cboTrangThai.Location = new Point(130, 325);
+            cboTrangThai.Location = new Point(132, 426);
             cboTrangThai.Name = "cboTrangThai";
             cboTrangThai.Size = new Size(200, 33);
             cboTrangThai.TabIndex = 6;
+            cboTrangThai.SelectedIndexChanged += cboTrangThai_SelectedIndexChanged;
             // 
             // cboVaiTro
             // 
             cboVaiTro.DropDownStyle = ComboBoxStyle.DropDownList;
             cboVaiTro.FormattingEnabled = true;
-            cboVaiTro.Location = new Point(130, 280);
+            cboVaiTro.Location = new Point(132, 365);
             cboVaiTro.Name = "cboVaiTro";
             cboVaiTro.Size = new Size(200, 33);
             cboVaiTro.TabIndex = 5;
+            cboVaiTro.SelectedIndexChanged += cboVaiTro_SelectedIndexChanged;
             // 
             // txtDiaChi
             // 
-            txtDiaChi.Location = new Point(130, 235);
+            txtDiaChi.Location = new Point(132, 304);
             txtDiaChi.Name = "txtDiaChi";
             txtDiaChi.Size = new Size(200, 31);
             txtDiaChi.TabIndex = 4;
             // 
             // txtSoDienThoai
             // 
-            txtSoDienThoai.Location = new Point(130, 190);
+            txtSoDienThoai.Location = new Point(132, 243);
             txtSoDienThoai.Name = "txtSoDienThoai";
             txtSoDienThoai.Size = new Size(200, 31);
             txtSoDienThoai.TabIndex = 3;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(130, 145);
+            txtEmail.Location = new Point(132, 182);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(200, 31);
             txtEmail.TabIndex = 2;
             // 
             // txtTenDangNhap
             // 
-            txtTenDangNhap.Location = new Point(130, 100);
+            txtTenDangNhap.Location = new Point(132, 121);
             txtTenDangNhap.Name = "txtTenDangNhap";
             txtTenDangNhap.Size = new Size(200, 31);
             txtTenDangNhap.TabIndex = 1;
             // 
             // txtHoTen
             // 
-            txtHoTen.Location = new Point(130, 55);
+            txtHoTen.Location = new Point(132, 60);
             txtHoTen.Name = "txtHoTen";
             txtHoTen.Size = new Size(200, 31);
             txtHoTen.TabIndex = 0;
@@ -169,7 +170,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(20, 328);
+            label7.Location = new Point(22, 437);
             label7.Name = "label7";
             label7.Size = new Size(96, 25);
             label7.TabIndex = 6;
@@ -178,7 +179,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(20, 283);
+            label6.Location = new Point(22, 376);
             label6.Name = "label6";
             label6.Size = new Size(68, 25);
             label6.TabIndex = 5;
@@ -187,7 +188,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(20, 238);
+            label5.Location = new Point(22, 315);
             label5.Name = "label5";
             label5.Size = new Size(72, 25);
             label5.TabIndex = 4;
@@ -196,7 +197,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(20, 193);
+            label4.Location = new Point(22, 254);
             label4.Name = "label4";
             label4.Size = new Size(48, 25);
             label4.TabIndex = 3;
@@ -205,7 +206,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(20, 148);
+            label3.Location = new Point(22, 193);
             label3.Name = "label3";
             label3.Size = new Size(58, 25);
             label3.TabIndex = 2;
@@ -214,7 +215,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(20, 103);
+            label2.Location = new Point(22, 132);
             label2.Name = "label2";
             label2.Size = new Size(78, 25);
             label2.TabIndex = 1;
@@ -223,7 +224,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(20, 58);
+            label1.Location = new Point(22, 71);
             label1.Name = "label1";
             label1.Size = new Size(94, 25);
             label1.TabIndex = 0;
@@ -232,7 +233,7 @@
             // btnLuu
             // 
             btnLuu.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnLuu.Location = new Point(639, 446);
+            btnLuu.Location = new Point(215, 707);
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(72, 37);
             btnLuu.TabIndex = 8;
@@ -243,7 +244,7 @@
             // btnThem
             // 
             btnThem.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnThem.Location = new Point(200, 443);
+            btnThem.Location = new Point(55, 634);
             btnThem.Name = "btnThem";
             btnThem.Size = new Size(72, 37);
             btnThem.TabIndex = 7;
@@ -261,21 +262,14 @@
             label8.TabIndex = 13;
             label8.Text = "Tìm kiếm:";
             // 
-            // sqlCommand1
-            // 
-            sqlCommand1.CommandTimeout = 30;
-            sqlCommand1.Connection = null;
-            sqlCommand1.Notification = null;
-            sqlCommand1.Transaction = null;
-            // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Times New Roman", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            label9.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
             label9.ForeColor = Color.DimGray;
-            label9.Location = new Point(334, 21);
+            label9.Location = new Point(561, 21);
             label9.Name = "label9";
-            label9.Size = new Size(299, 41);
+            label9.Size = new Size(335, 45);
             label9.TabIndex = 14;
             label9.Text = "Quản lý Tài khoản";
             // 
@@ -284,16 +278,16 @@
             groupBox2.Controls.Add(txtTimKiem);
             groupBox2.Controls.Add(dgvTaiKhoan);
             groupBox2.Controls.Add(label8);
-            groupBox2.Location = new Point(402, 77);
+            groupBox2.Location = new Point(354, 77);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(532, 363);
+            groupBox2.Size = new Size(1048, 678);
             groupBox2.TabIndex = 15;
             groupBox2.TabStop = false;
             groupBox2.Text = "Danh Sách";
             // 
             // btnSua
             // 
-            btnSua.Location = new Point(304, 444);
+            btnSua.Location = new Point(159, 635);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(72, 37);
             btnSua.TabIndex = 14;
@@ -303,7 +297,7 @@
             // 
             // btnX
             // 
-            btnX.Location = new Point(408, 444);
+            btnX.Location = new Point(263, 635);
             btnX.Name = "btnX";
             btnX.Size = new Size(72, 37);
             btnX.TabIndex = 16;
@@ -313,7 +307,7 @@
             // 
             // btnLM
             // 
-            btnLM.Location = new Point(507, 445);
+            btnLM.Location = new Point(92, 707);
             btnLM.Name = "btnLM";
             btnLM.Size = new Size(96, 36);
             btnLM.TabIndex = 17;
@@ -337,7 +331,7 @@
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             Margin = new Padding(3, 4, 3, 4);
             Name = "UC_QuanLyTaiKhoan";
-            Size = new Size(952, 506);
+            Size = new Size(1418, 778);
             Load += UC_QuanLyTaiKhoan_Load;
             ((System.ComponentModel.ISupportInitialize)dgvTaiKhoan).EndInit();
             groupBox1.ResumeLayout(false);
@@ -371,7 +365,6 @@
         private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.Label label8;
-        private Microsoft.Data.SqlClient.SqlCommand sqlCommand1;
         private Label label9;
         private GroupBox groupBox2;
         private Button btnSua;

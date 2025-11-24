@@ -39,9 +39,10 @@
             label1 = new Label();
             flowSanPham = new FlowLayoutPanel();
             panel1 = new Panel();
+            btnMuaNhieu = new RButton();
+            picLichSu = new PictureBox();
             btnTK = new Button();
             flpDanhMuc = new FlowLayoutPanel();
-            picLichSu = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -53,17 +54,18 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.logo;
-            pictureBox1.Location = new Point(3, 0);
+            pictureBox1.Location = new Point(3, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(215, 132);
+            pictureBox1.Size = new Size(235, 163);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // pictureBox4
             // 
             pictureBox4.Image = Properties.Resources.goidienthoai;
-            pictureBox4.Location = new Point(671, 19);
+            pictureBox4.Location = new Point(954, 29);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(47, 36);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -73,7 +75,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = Properties.Resources.email1;
-            pictureBox3.Location = new Point(358, 21);
+            pictureBox3.Location = new Point(596, 31);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(37, 34);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -83,7 +85,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(724, 21);
+            label3.Location = new Point(1007, 31);
             label3.Name = "label3";
             label3.Size = new Size(229, 25);
             label3.TabIndex = 7;
@@ -92,7 +94,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(401, 21);
+            label2.Location = new Point(639, 31);
             label2.Name = "label2";
             label2.Size = new Size(233, 25);
             label2.TabIndex = 6;
@@ -100,7 +102,7 @@
             // 
             // btnDangXuat
             // 
-            btnDangXuat.Location = new Point(1081, 21);
+            btnDangXuat.Location = new Point(55, 898);
             btnDangXuat.Name = "btnDangXuat";
             btnDangXuat.Size = new Size(107, 34);
             btnDangXuat.TabIndex = 5;
@@ -112,9 +114,9 @@
             // 
             picGioHang.BorderStyle = BorderStyle.FixedSingle;
             picGioHang.Image = Properties.Resources.giohang;
-            picGioHang.Location = new Point(962, 74);
+            picGioHang.Location = new Point(1239, 85);
             picGioHang.Name = "picGioHang";
-            picGioHang.Size = new Size(46, 33);
+            picGioHang.Size = new Size(60, 35);
             picGioHang.SizeMode = PictureBoxSizeMode.StretchImage;
             picGioHang.TabIndex = 4;
             picGioHang.TabStop = false;
@@ -122,53 +124,83 @@
             // 
             // txtTK
             // 
-            txtTK.Location = new Point(377, 76);
+            txtTK.Location = new Point(549, 87);
             txtTK.Name = "txtTK";
-            txtTK.Size = new Size(508, 31);
+            txtTK.Size = new Size(576, 31);
             txtTK.TabIndex = 3;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(274, 76);
+            label1.Location = new Point(401, 91);
             label1.Name = "label1";
             label1.Size = new Size(85, 25);
             label1.TabIndex = 2;
             label1.Text = "Tìm Kiếm";
+            label1.Click += label1_Click;
             // 
             // flowSanPham
             // 
             flowSanPham.AutoScroll = true;
-            flowSanPham.Location = new Point(223, 144);
+            flowSanPham.Location = new Point(235, 172);
             flowSanPham.Name = "flowSanPham";
-            flowSanPham.Size = new Size(970, 473);
+            flowSanPham.Size = new Size(1443, 772);
             flowSanPham.TabIndex = 3;
             // 
             // panel1
             // 
             panel1.BackColor = Color.LavenderBlush;
+            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(btnMuaNhieu);
             panel1.Controls.Add(picLichSu);
             panel1.Controls.Add(btnTK);
             panel1.Controls.Add(pictureBox4);
             panel1.Controls.Add(pictureBox3);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
-            panel1.Controls.Add(btnDangXuat);
             panel1.Controls.Add(picGioHang);
             panel1.Controls.Add(txtTK);
             panel1.Controls.Add(label1);
-            panel1.Controls.Add(pictureBox1);
-            panel1.Location = new Point(3, 3);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1193, 135);
+            panel1.Size = new Size(1678, 166);
             panel1.TabIndex = 2;
             panel1.Paint += panel1_Paint;
             // 
+            // btnMuaNhieu
+            // 
+            btnMuaNhieu.BackColor = Color.PaleVioletRed;
+            btnMuaNhieu.BorderColor = null;
+            btnMuaNhieu.BorderRadius = 20;
+            btnMuaNhieu.FlatAppearance.BorderSize = 0;
+            btnMuaNhieu.FlatStyle = FlatStyle.Flat;
+            btnMuaNhieu.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnMuaNhieu.ForeColor = Color.White;
+            btnMuaNhieu.Location = new Point(1520, 78);
+            btnMuaNhieu.Name = "btnMuaNhieu";
+            btnMuaNhieu.Size = new Size(146, 40);
+            btnMuaNhieu.TabIndex = 12;
+            btnMuaNhieu.Text = "Mua Ngay";
+            btnMuaNhieu.UseVisualStyleBackColor = false;
+            btnMuaNhieu.Click += btnMuaNhieu_Click;
+            // 
+            // picLichSu
+            // 
+            picLichSu.Image = Properties.Resources.iconLSDN;
+            picLichSu.Location = new Point(1341, 85);
+            picLichSu.Name = "picLichSu";
+            picLichSu.Size = new Size(50, 34);
+            picLichSu.SizeMode = PictureBoxSizeMode.StretchImage;
+            picLichSu.TabIndex = 11;
+            picLichSu.TabStop = false;
+            picLichSu.Click += picLichSu_Click;
+            // 
             // btnTK
             // 
-            btnTK.Location = new Point(900, 74);
+            btnTK.Location = new Point(1149, 86);
             btnTK.Name = "btnTK";
-            btnTK.Size = new Size(43, 34);
+            btnTK.Size = new Size(53, 34);
             btnTK.TabIndex = 10;
             btnTK.Text = "🔍";
             btnTK.UseVisualStyleBackColor = true;
@@ -178,33 +210,25 @@
             // 
             flpDanhMuc.AutoScroll = true;
             flpDanhMuc.FlowDirection = FlowDirection.TopDown;
-            flpDanhMuc.Location = new Point(6, 144);
+            flpDanhMuc.Location = new Point(0, 172);
             flpDanhMuc.Name = "flpDanhMuc";
-            flpDanhMuc.Size = new Size(215, 473);
+            flpDanhMuc.Size = new Size(238, 720);
             flpDanhMuc.TabIndex = 4;
             flpDanhMuc.Paint += flpDanhMuc_Paint;
-            // 
-            // picLichSu
-            // 
-            picLichSu.Image = Properties.Resources.iconLSDN;
-            picLichSu.Location = new Point(1029, 74);
-            picLichSu.Name = "picLichSu";
-            picLichSu.Size = new Size(44, 35);
-            picLichSu.SizeMode = PictureBoxSizeMode.StretchImage;
-            picLichSu.TabIndex = 11;
-            picLichSu.TabStop = false;
-            picLichSu.Click += picLichSu_Click;
             // 
             // FormTrangChu
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
-            ClientSize = new Size(1203, 664);
+            ClientSize = new Size(1678, 944);
+            Controls.Add(btnDangXuat);
             Controls.Add(flpDanhMuc);
             Controls.Add(panel1);
             Controls.Add(flowSanPham);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormTrangChu";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FormTrangChu";
             Load += FormTrangChu_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -232,5 +256,6 @@
         private Button btnTK;
         private FlowLayoutPanel flpDanhMuc;
         private PictureBox picLichSu;
+        private RButton btnMuaNhieu;
     }
 }

@@ -68,7 +68,7 @@
             // 
             // panel2
             // 
-            panel2.BackColor = Color.DarkSlateGray;
+            panel2.BackColor = Color.PaleVioletRed;
             panel2.Controls.Add(label5);
             panel2.Controls.Add(pictureBox1);
             panel2.Dock = DockStyle.Left;
@@ -151,7 +151,7 @@
             // 
             // btnDangNhap
             // 
-            btnDangNhap.BackColor = Color.DarkSlateGray;
+            btnDangNhap.BackColor = Color.PaleVioletRed;
             btnDangNhap.BorderColor = null;
             btnDangNhap.BorderRadius = 30;
             btnDangNhap.FlatAppearance.BorderSize = 0;
@@ -202,7 +202,7 @@
             label6.AutoSize = true;
             label6.BackColor = Color.White;
             label6.Font = new Font("Century Gothic", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label6.ForeColor = Color.DarkSlateGray;
+            label6.ForeColor = Color.PaleVioletRed;
             label6.Location = new Point(195, 89);
             label6.Name = "label6";
             label6.Size = new Size(147, 47);

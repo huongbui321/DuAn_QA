@@ -30,6 +30,7 @@
         {
             label1 = new Label();
             pnMenu = new Panel();
+            pictureBox1 = new PictureBox();
             btnDangXuat = new Button();
             btnThongKe = new Button();
             btnQLKho = new Button();
@@ -38,10 +39,9 @@
             btnQLSanPham = new Button();
             pnHeader = new Panel();
             pnContent = new Panel();
-            pictureBox1 = new PictureBox();
             pnMenu.SuspendLayout();
-            pnHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            pnHeader.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -49,7 +49,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 24F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = Color.PaleVioletRed;
-            label1.Location = new Point(113, 48);
+            label1.Location = new Point(353, 47);
             label1.Name = "label1";
             label1.Size = new Size(740, 55);
             label1.TabIndex = 0;
@@ -59,20 +59,32 @@
             // pnMenu
             // 
             pnMenu.BackColor = Color.Pink;
+            pnMenu.Controls.Add(pictureBox1);
             pnMenu.Controls.Add(btnDangXuat);
             pnMenu.Controls.Add(btnThongKe);
             pnMenu.Controls.Add(btnQLKho);
             pnMenu.Controls.Add(btnQLTaiKhoan);
             pnMenu.Controls.Add(btnQLDonHang);
             pnMenu.Controls.Add(btnQLSanPham);
-            pnMenu.Location = new Point(0, 166);
+            pnMenu.Dock = DockStyle.Left;
+            pnMenu.Location = new Point(0, 0);
             pnMenu.Name = "pnMenu";
-            pnMenu.Size = new Size(260, 506);
+            pnMenu.Size = new Size(260, 944);
             pnMenu.TabIndex = 1;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.logoFashionshop;
+            pictureBox1.Location = new Point(0, 3);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(260, 158);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 4;
+            pictureBox1.TabStop = false;
             // 
             // btnDangXuat
             // 
-            btnDangXuat.Location = new Point(73, 448);
+            btnDangXuat.Location = new Point(65, 883);
             btnDangXuat.Name = "btnDangXuat";
             btnDangXuat.Size = new Size(110, 39);
             btnDangXuat.TabIndex = 5;
@@ -82,7 +94,7 @@
             // 
             // btnThongKe
             // 
-            btnThongKe.Location = new Point(0, 348);
+            btnThongKe.Location = new Point(0, 510);
             btnThongKe.Name = "btnThongKe";
             btnThongKe.Size = new Size(260, 83);
             btnThongKe.TabIndex = 4;
@@ -92,7 +104,7 @@
             // 
             // btnQLKho
             // 
-            btnQLKho.Location = new Point(0, 262);
+            btnQLKho.Location = new Point(0, 424);
             btnQLKho.Name = "btnQLKho";
             btnQLKho.Size = new Size(260, 83);
             btnQLKho.TabIndex = 3;
@@ -102,7 +114,7 @@
             // 
             // btnQLTaiKhoan
             // 
-            btnQLTaiKhoan.Location = new Point(0, 176);
+            btnQLTaiKhoan.Location = new Point(0, 338);
             btnQLTaiKhoan.Name = "btnQLTaiKhoan";
             btnQLTaiKhoan.Size = new Size(260, 83);
             btnQLTaiKhoan.TabIndex = 2;
@@ -112,7 +124,7 @@
             // 
             // btnQLDonHang
             // 
-            btnQLDonHang.Location = new Point(0, 90);
+            btnQLDonHang.Location = new Point(0, 252);
             btnQLDonHang.Name = "btnQLDonHang";
             btnQLDonHang.Size = new Size(260, 83);
             btnQLDonHang.TabIndex = 1;
@@ -122,7 +134,7 @@
             // 
             // btnQLSanPham
             // 
-            btnQLSanPham.Location = new Point(0, 4);
+            btnQLSanPham.Location = new Point(0, 166);
             btnQLSanPham.Name = "btnQLSanPham";
             btnQLSanPham.Size = new Size(260, 83);
             btnQLSanPham.TabIndex = 0;
@@ -134,44 +146,36 @@
             // 
             pnHeader.BackColor = Color.LavenderBlush;
             pnHeader.Controls.Add(label1);
-            pnHeader.Location = new Point(266, 2);
+            pnHeader.Dock = DockStyle.Top;
+            pnHeader.Location = new Point(260, 0);
             pnHeader.Name = "pnHeader";
-            pnHeader.Size = new Size(937, 166);
+            pnHeader.Size = new Size(1418, 166);
             pnHeader.TabIndex = 2;
             // 
             // pnContent
             // 
-            pnContent.Location = new Point(266, 161);
+            pnContent.Dock = DockStyle.Fill;
+            pnContent.Location = new Point(260, 166);
             pnContent.Name = "pnContent";
-            pnContent.Size = new Size(937, 503);
+            pnContent.Size = new Size(1418, 778);
             pnContent.TabIndex = 3;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = Properties.Resources.logoFashionshop;
-            pictureBox1.Location = new Point(0, 2);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(260, 158);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;
             // 
             // FormQL_BanHang
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
-            ClientSize = new Size(1203, 664);
-            Controls.Add(pictureBox1);
+            ClientSize = new Size(1678, 944);
             Controls.Add(pnContent);
             Controls.Add(pnHeader);
             Controls.Add(pnMenu);
             Name = "FormQL_BanHang";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FormQL_BanHang";
             pnMenu.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             pnHeader.ResumeLayout(false);
             pnHeader.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OfficeOpenXml; // <-- Thư viện EPPlus (Excel)
+using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,8 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting; // <-- Thư viện Biểu đồ
-using OfficeOpenXml; // <-- Thư viện EPPlus (Excel)
-using OfficeOpenXml.Style;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace DuAnQA
 {
@@ -227,72 +228,250 @@ namespace DuAnQA
                 MessageBox.Show("Lỗi tải Top Lists: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void TaoHeaderCongTy(ExcelWorksheet ws, string tieuDeBaoCao)
+        {
+            // Tên công ty
+            ws.Cells["A1:E1"].Merge = true;
+            ws.Cells["A1"].Value = "CỬA HÀNG THỜI TRANG HUONGIE CLOTHES";
+            ws.Cells["A1"].Style.Font.Size = 14;
+            ws.Cells["A1"].Style.Font.Bold = true;
+            ws.Cells["A1"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
+            // Địa chỉ
+            ws.Cells["A2:E2"].Merge = true;
+            ws.Cells["A2"].Value = "Địa chỉ: Hà Nội - Hotline: 0856.340.155";
+            ws.Cells["A2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            // Tiêu đề báo cáo
+            ws.Cells["A4:E4"].Merge = true;
+            ws.Cells["A4"].Value = tieuDeBaoCao.ToUpper();
+            ws.Cells["A4"].Style.Font.Size = 16;
+            ws.Cells["A4"].Style.Font.Bold = true;
+            ws.Cells["A4"].Style.Font.Color.SetColor(Color.Blue);
+            ws.Cells["A4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            // Ngày tháng
+            ws.Cells["A5:E5"].Merge = true;
+            ws.Cells["A5"].Value = $"(Ngày xuất: {DateTime.Now:dd/MM/yyyy HH:mm})";
+            ws.Cells["A5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A5"].Style.Font.Italic = true;
+        }
+
+        // Hàm 2: Tạo Chữ Ký (Dùng chung)
+        private void TaoChuKy(ExcelWorksheet ws, int startRow)
+        {
+            // Người lập
+            ws.Cells[startRow, 1, startRow, 2].Merge = true;
+            ws.Cells[startRow, 1].Value = "Người lập biểu";
+            ws.Cells[startRow, 1].Style.Font.Bold = true;
+            ws.Cells[startRow, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            // Giám đốc
+            ws.Cells[startRow, 4, startRow, 5].Merge = true;
+            ws.Cells[startRow, 4].Value = "Quản lý";
+            ws.Cells[startRow, 4].Style.Font.Bold = true;
+            ws.Cells[startRow, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            // Ký tên (cách ra 4 dòng)
+            int signPlace = startRow + 4;
+            ws.Cells[signPlace, 1, signPlace, 2].Merge = true;
+            ws.Cells[signPlace, 1].Value = "(Ký, họ tên)";
+            ws.Cells[signPlace, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            ws.Cells[signPlace, 4, signPlace, 5].Merge = true;
+            ws.Cells[signPlace, 4].Value = "(Ký, đóng dấu)";
+            ws.Cells[signPlace, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        }
+
+        // Hàm 3: Tự động tạo Sheet từ DataTable (Header + Table + Footer)
+        private void TaoSheetBaoCao(ExcelWorksheet ws, DataTable dt, string title)
+        {
+            // 1. Tạo Header
+            TaoHeaderCongTy(ws, title);
+
+            // 2. Đổ dữ liệu
+            int startRow = 7;
+            if (dt.Rows.Count > 0)
+            {
+                // Load dữ liệu
+                ws.Cells["A" + startRow].LoadFromDataTable(dt, true);
+
+                // Format tiêu đề bảng (dòng đầu tiên của bảng)
+                int colCount = dt.Columns.Count;
+                using (var range = ws.Cells[startRow, 1, startRow, colCount])
+                {
+                    range.Style.Font.Bold = true;
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                    range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                }
+
+                // Kẻ khung viền cho toàn bộ bảng
+                int endRow = startRow + dt.Rows.Count;
+                using (var range = ws.Cells[startRow, 1, endRow, colCount])
+                {
+                    range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                }
+
+                // 3. Tạo Chữ ký ở dưới cùng
+                TaoChuKy(ws, endRow + 3);
+            }
+            else
+            {
+                ws.Cells["A7"].Value = "Không có dữ liệu.";
+            }
+        }
         private void btnXuatExcel_Click(object sender, EventArgs e)
         {
             try
             {
-                // Mở hộp thoại Lưu file
                 SaveFileDialog saveDialog = new SaveFileDialog();
-                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
-                saveDialog.FileName = $"BaoCao_HuongieClothes_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
+                saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx";
+                saveDialog.FileName = $"BaoCao_TongHop_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
 
                 if (saveDialog.ShowDialog() == DialogResult.OK)
                 {
                     using (var package = new ExcelPackage())
                     {
-                        // --- Sheet 1: KPIs ---
-                        var wsKPI = package.Workbook.Worksheets.Add("KPIs Tổng Quan");
-                        wsKPI.Cells["A1"].Value = "BÁO CÁO TỔNG QUAN HUONGIE CLOTHES";
-                        wsKPI.Cells["A1:C1"].Merge = true;
-                        wsKPI.Cells["A1"].Style.Font.Bold = true;
-                        wsKPI.Cells["A1"].Style.Font.Size = 16;
+                        // ==========================================================
+                        // SHEET 1: BÁO CÁO TỔNG HỢP (DASHBOARD) - MỚI THÊM
+                        // ==========================================================
+                        var wsTongHop = package.Workbook.Worksheets.Add("Báo Cáo Tổng Hợp");
 
-                        wsKPI.Cells["A3"].Value = "Tổng Doanh Thu";
-                        wsKPI.Cells["B3"].Value = lblTongDoanhThu.Text;
-                        wsKPI.Cells["A4"].Value = "Tổng Đơn Hàng";
-                        wsKPI.Cells["B4"].Value = lblTongDonHang.Text;
-                        wsKPI.Cells["A5"].Value = "Tổng Khách Hàng";
-                        wsKPI.Cells["B5"].Value = lblTongKhachHang.Text;
-                        wsKPI.Cells["A6"].Value = "Tổng Tồn Kho";
-                        wsKPI.Cells["B6"].Value = lblTongTonKho.Text;
-                        wsKPI.Cells["A3:A6"].Style.Font.Bold = true;
-                        wsKPI.Cells["A3:B6"].AutoFitColumns();
+                        // 1. Header Công Ty
+                        TaoHeaderCongTy(wsTongHop, "BÁO CÁO TỔNG HỢP TÌNH HÌNH KINH DOANH");
 
-                        // --- Sheet 2: Doanh thu 7 ngày ---
-                        if (dtDoanhThu != null && dtDoanhThu.Rows.Count > 0)
+                        // 2. Khu vực KPIs (Trình bày ngang)
+                        int rowKPI = 7;
+                        // Tiêu đề cột
+                        wsTongHop.Cells[rowKPI, 1].Value = "DOANH THU";
+                        wsTongHop.Cells[rowKPI, 2].Value = "ĐƠN HÀNG";
+                        wsTongHop.Cells[rowKPI, 3].Value = "KHÁCH HÀNG";
+                        wsTongHop.Cells[rowKPI, 4].Value = "TỒN KHO";
+
+                        // Style tiêu đề
+                        using (var range = wsTongHop.Cells[rowKPI, 1, rowKPI, 4])
                         {
-                            var wsDoanhThu = package.Workbook.Worksheets.Add("Doanh thu 7 ngày");
-                            wsDoanhThu.Cells["A1"].LoadFromDataTable(dtDoanhThu, true);
-                            wsDoanhThu.Cells[2, 1, dtDoanhThu.Rows.Count + 1, 1].Style.Numberformat.Format = "dd/MM/yyyy";
-                            wsDoanhThu.Cells[2, 2, dtDoanhThu.Rows.Count + 1, 2].Style.Numberformat.Format = "#,##0";
-                            wsDoanhThu.Cells["A1:B1"].Style.Font.Bold = true;
-                            wsDoanhThu.Cells["A1:B" + (dtDoanhThu.Rows.Count + 1)].AutoFitColumns();
+                            range.Style.Font.Bold = true;
+                            range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            range.Style.Fill.BackgroundColor.SetColor(Color.DarkBlue);
+                            range.Style.Font.Color.SetColor(Color.White);
+                            range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                         }
 
-                        // --- Sheet 3: Top Sản phẩm ---
+                        // Giá trị
+                        rowKPI++;
+                        wsTongHop.Cells[rowKPI, 1].Value = lblTongDoanhThu.Text;
+                        wsTongHop.Cells[rowKPI, 2].Value = lblTongDonHang.Text;
+                        wsTongHop.Cells[rowKPI, 3].Value = lblTongKhachHang.Text;
+                        wsTongHop.Cells[rowKPI, 4].Value = lblTongTonKho.Text;
+
+                        // Style giá trị
+                        using (var range = wsTongHop.Cells[rowKPI, 1, rowKPI, 4])
+                        {
+                            range.Style.Font.Size = 14;
+                            range.Style.Font.Bold = true;
+                            range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            range.Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+                        }
+                        wsTongHop.Cells[1, 1, rowKPI, 4].AutoFitColumns(); // Giãn cột cho đẹp
+
+                        // 3. Hai bảng Top nằm cạnh nhau
+                        int rowTable = rowKPI + 3;
+
+                        // --- Bảng bên Trái: Top Sản Phẩm ---
+                        wsTongHop.Cells[rowTable, 1].Value = "TOP SẢN PHẨM BÁN CHẠY";
+                        wsTongHop.Cells[rowTable, 1, rowTable, 2].Merge = true;
+                        wsTongHop.Cells[rowTable, 1].Style.Font.Bold = true;
+                        wsTongHop.Cells[rowTable, 1].Style.Font.Color.SetColor(Color.Red);
+
                         if (dtTopSanPham != null && dtTopSanPham.Rows.Count > 0)
                         {
-                            var wsTopSP = package.Workbook.Worksheets.Add("Top Sản Phẩm");
-                            wsTopSP.Cells["A1"].LoadFromDataTable(dtTopSanPham, true);
-                            wsTopSP.Cells["A1:B1"].Style.Font.Bold = true;
-                            wsTopSP.Cells["A1:B" + (dtTopSanPham.Rows.Count + 1)].AutoFitColumns();
+                            // Đổ dữ liệu vào ô A(rowTable+1)
+                            wsTongHop.Cells[rowTable + 1, 1].LoadFromDataTable(dtTopSanPham, true);
+                            // Kẻ khung
+                            int endRowSP = rowTable + 1 + dtTopSanPham.Rows.Count;
+                            using (var range = wsTongHop.Cells[rowTable + 1, 1, endRowSP, 2])
+                            {
+                                range.AutoFitColumns();
+                                range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            }
                         }
 
-                        // --- Sheet 4: Top Khách hàng ---
+                        // --- Bảng bên Phải: Top Khách Hàng ---
+                        // Đặt tại cột D (Cột 4)
+                        wsTongHop.Cells[rowTable, 4].Value = "TOP KHÁCH HÀNG VIP";
+                        wsTongHop.Cells[rowTable, 4, rowTable, 5].Merge = true;
+                        wsTongHop.Cells[rowTable, 4].Style.Font.Bold = true;
+                        wsTongHop.Cells[rowTable, 4].Style.Font.Color.SetColor(Color.Red);
+
                         if (dtTopKhachHang != null && dtTopKhachHang.Rows.Count > 0)
                         {
-                            var wsTopKH = package.Workbook.Worksheets.Add("Top Khách Hàng");
-                            wsTopKH.Cells["A1"].LoadFromDataTable(dtTopKhachHang, true);
-                            wsTopKH.Cells[2, 2, dtTopKhachHang.Rows.Count + 1, 2].Style.Numberformat.Format = "#,##0";
-                            wsTopKH.Cells["A1:B1"].Style.Font.Bold = true;
-                            wsTopKH.Cells["A1:B" + (dtTopKhachHang.Rows.Count + 1)].AutoFitColumns();
+                            // Đổ dữ liệu vào ô D(rowTable+1)
+                            wsTongHop.Cells[rowTable + 1, 4].LoadFromDataTable(dtTopKhachHang, true);
+
+                            // Format tiền
+                            int endRowKH = rowTable + 1 + dtTopKhachHang.Rows.Count;
+                            wsTongHop.Cells[rowTable + 2, 5, endRowKH, 5].Style.Numberformat.Format = "#,##0 \"VNĐ\"";
+
+                            // Kẻ khung
+                            using (var range = wsTongHop.Cells[rowTable + 1, 4, endRowKH, 5])
+                            {
+                                range.AutoFitColumns();
+                                range.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                                range.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                                range.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                                range.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                            }
                         }
 
-                        // --- Lưu file ---
+                        // Chữ ký cho sheet tổng hợp
+                        TaoChuKy(wsTongHop, rowTable + 10);
+
+
+                        // ==========================================================
+                        // CÁC SHEET CHI TIẾT (GIỮ NGUYÊN NHƯ CŨ)
+                        // ==========================================================
+
+                        // Sheet 2: Doanh thu 7 ngày
+                        if (dtDoanhThu != null && dtDoanhThu.Rows.Count > 0)
+                        {
+                            var ws = package.Workbook.Worksheets.Add("Chi Tiết Doanh Thu");
+                            TaoSheetBaoCao(ws, dtDoanhThu, "CHI TIẾT DOANH THU 7 NGÀY");
+                            int lastRow = dtDoanhThu.Rows.Count + 7;
+                            ws.Cells[8, 1, lastRow, 1].Style.Numberformat.Format = "dd/MM/yyyy";
+                            ws.Cells[8, 2, lastRow, 2].Style.Numberformat.Format = "#,##0 \"VNĐ\"";
+                            ws.Cells.AutoFitColumns();
+                        }
+
+                        // Sheet 3: Top Sản Phẩm (Chi tiết)
+                        if (dtTopSanPham != null)
+                        {
+                            var ws = package.Workbook.Worksheets.Add("Chi Tiết Sản Phẩm");
+                            TaoSheetBaoCao(ws, dtTopSanPham, "THỐNG KÊ SẢN PHẨM BÁN CHẠY");
+                            ws.Cells.AutoFitColumns();
+                        }
+
+                        // Sheet 4: Top Khách Hàng (Chi tiết)
+                        if (dtTopKhachHang != null)
+                        {
+                            var ws = package.Workbook.Worksheets.Add("Chi Tiết Khách Hàng");
+                            TaoSheetBaoCao(ws, dtTopKhachHang, "THỐNG KÊ KHÁCH HÀNG");
+                            int lastRow = dtTopKhachHang.Rows.Count + 7;
+                            ws.Cells[8, 2, lastRow, 2].Style.Numberformat.Format = "#,##0 \"VNĐ\"";
+                            ws.Cells.AutoFitColumns();
+                        }
+
+                        // --- LƯU FILE ---
                         FileInfo file = new FileInfo(saveDialog.FileName);
                         package.SaveAs(file);
-                        MessageBox.Show("Xuất file Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Xuất báo cáo tổng hợp thành công!\n" + file.FullName, "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }

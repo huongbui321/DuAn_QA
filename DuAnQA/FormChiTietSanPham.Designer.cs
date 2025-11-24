@@ -219,6 +219,7 @@
             Controls.Add(lblTenSP);
             Controls.Add(label1);
             Controls.Add(picHinhAnh);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormChiTietSanPham";
             Text = "FormChiTietSanPham";
             Load += FormChiTietSanPham_Load;

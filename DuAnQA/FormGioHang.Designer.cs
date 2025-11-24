@@ -40,7 +40,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = Color.AliceBlue;
+            label1.BackColor = Color.LavenderBlush;
             label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = Color.PaleVioletRed;
             label1.Location = new Point(426, 62);
@@ -52,10 +52,11 @@
             // lblTongTien
             // 
             lblTongTien.AutoSize = true;
-            lblTongTien.Location = new Point(543, 458);
+            lblTongTien.Location = new Point(487, 478);
             lblTongTien.Name = "lblTongTien";
-            lblTongTien.Size = new Size(0, 25);
+            lblTongTien.Size = new Size(75, 25);
             lblTongTien.TabIndex = 2;
+            lblTongTien.Text = "sdvfusd";
             // 
             // btnThanhToan
             // 
@@ -93,6 +94,7 @@
             // 
             // flowGioHang
             // 
+            flowGioHang.AutoScroll = true;
             flowGioHang.Location = new Point(74, 167);
             flowGioHang.Name = "flowGioHang";
             flowGioHang.Size = new Size(1032, 288);
@@ -102,14 +104,16 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.AliceBlue;
+            BackColor = Color.LavenderBlush;
             ClientSize = new Size(1203, 664);
             Controls.Add(flowGioHang);
             Controls.Add(btnQuayLai);
             Controls.Add(btnThanhToan);
             Controls.Add(lblTongTien);
             Controls.Add(label1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormGioHang";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "FormGioHang";
             Load += FormGioHang_Load;
             ResumeLayout(false);

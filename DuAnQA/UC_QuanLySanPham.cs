@@ -24,11 +24,43 @@ namespace DuAnQA // Đảm bảo đây là namespace của bạn
         {
             try
             {
-                string query = "SELECT MaSanPham, TenSanPham, MoTa, Gia, SoLuong, HinhAnh, MaDanhMuc FROM SanPham";
+                // <<< SỬA QUERY: Dùng JOIN để lấy TenDanhMuc >>>
+                string query = @"
+            SELECT 
+                sp.MaSanPham, 
+                sp.TenSanPham, 
+                dm.TenDanhMuc,  -- Lấy thêm cột này từ bảng DanhMuc
+                sp.MoTa, 
+                sp.Gia, 
+                sp.SoLuong, 
+                sp.HinhAnh, 
+                sp.MaDanhMuc 
+            FROM SanPham sp
+            JOIN DanhMuc dm ON sp.MaDanhMuc = dm.MaDanhMuc";
+
                 DataTable dt = kn.LayDuLieu(query);
-
-
                 dgvSanPham.DataSource = dt;
+
+                // --- TÙY CHỈNH TÊN CỘT HIỂN THỊ ---
+                dgvSanPham.Columns["MaSanPham"].HeaderText = "Mã SP";
+                dgvSanPham.Columns["TenSanPham"].HeaderText = "Tên Sản Phẩm";
+
+                // <<< CỘT MỚI >>>
+                dgvSanPham.Columns["TenDanhMuc"].HeaderText = "Danh Mục";
+
+                dgvSanPham.Columns["MoTa"].HeaderText = "Mô Tả";
+                dgvSanPham.Columns["Gia"].HeaderText = "Giá";
+                dgvSanPham.Columns["SoLuong"].HeaderText = "Số Lượng";
+                dgvSanPham.Columns["HinhAnh"].HeaderText = "Hình Ảnh";
+
+                // Có thể ẩn Mã Danh Mục đi vì đã có Tên rồi (hoặc để lại tùy bạn)
+                dgvSanPham.Columns["MaDanhMuc"].Visible = false;
+
+                // Tự động co giãn cột
+                dgvSanPham.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // Định dạng tiền tệ
+                dgvSanPham.Columns["Gia"].DefaultCellStyle.Format = "N0";
             }
             catch (Exception ex)
             {

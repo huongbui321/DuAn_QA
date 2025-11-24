@@ -51,9 +51,9 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = Color.AliceBlue;
+            label1.BackColor = Color.LightBlue;
             label1.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.PaleVioletRed;
+            label1.ForeColor = Color.Black;
             label1.Location = new Point(447, 25);
             label1.Name = "label1";
             label1.Size = new Size(344, 45);
@@ -79,6 +79,7 @@
             Controls.Add(btnQL);
             Controls.Add(label1);
             Controls.Add(dgvLichSu);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormLichSuMuaHang";
             Text = "FormLichSuMuaHang";
             Load += FormLichSuMuaHang_Load;

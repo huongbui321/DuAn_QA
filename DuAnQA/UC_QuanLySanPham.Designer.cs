@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             splitContainer1 = new SplitContainer();
+            label8 = new Label();
             groupBox1 = new GroupBox();
             cbMaDanhMuc = new ComboBox();
             picHinhAnh = new PictureBox();
@@ -63,20 +64,32 @@
             // 
             // splitContainer1
             // 
+            splitContainer1.Dock = DockStyle.Fill;
             splitContainer1.Location = new Point(0, 0);
             splitContainer1.Name = "splitContainer1";
             splitContainer1.Orientation = Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
+            splitContainer1.Panel1.Controls.Add(label8);
             splitContainer1.Panel1.Controls.Add(groupBox1);
             // 
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(dgvSanPham);
-            splitContainer1.Size = new Size(937, 487);
-            splitContainer1.SplitterDistance = 265;
+            splitContainer1.Size = new Size(1418, 778);
+            splitContainer1.SplitterDistance = 423;
             splitContainer1.TabIndex = 0;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Times New Roman", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            label8.Location = new Point(550, 22);
+            label8.Name = "label8";
+            label8.Size = new Size(328, 45);
+            label8.TabIndex = 1;
+            label8.Text = "Quản lý sản phẩm";
             // 
             // groupBox1
             // 
@@ -101,10 +114,9 @@
             groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(label1);
-            groupBox1.Dock = DockStyle.Fill;
-            groupBox1.Location = new Point(0, 0);
+            groupBox1.Location = new Point(26, 70);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(937, 265);
+            groupBox1.Size = new Size(1354, 294);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "Thông tin sản phẩm";
@@ -113,16 +125,16 @@
             // cbMaDanhMuc
             // 
             cbMaDanhMuc.FormattingEnabled = true;
-            cbMaDanhMuc.Location = new Point(156, 228);
+            cbMaDanhMuc.Location = new Point(164, 226);
             cbMaDanhMuc.Name = "cbMaDanhMuc";
             cbMaDanhMuc.Size = new Size(220, 33);
             cbMaDanhMuc.TabIndex = 25;
             // 
             // picHinhAnh
             // 
-            picHinhAnh.Location = new Point(763, 37);
+            picHinhAnh.Location = new Point(1081, 47);
             picHinhAnh.Name = "picHinhAnh";
-            picHinhAnh.Size = new Size(157, 155);
+            picHinhAnh.Size = new Size(202, 189);
             picHinhAnh.SizeMode = PictureBoxSizeMode.StretchImage;
             picHinhAnh.TabIndex = 6;
             picHinhAnh.TabStop = false;
@@ -130,7 +142,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(6, 233);
+            label7.Location = new Point(6, 226);
             label7.Name = "label7";
             label7.Size = new Size(102, 25);
             label7.TabIndex = 24;
@@ -138,14 +150,14 @@
             // 
             // txtSoLuong
             // 
-            txtSoLuong.Location = new Point(156, 181);
+            txtSoLuong.Location = new Point(164, 185);
             txtSoLuong.Name = "txtSoLuong";
             txtSoLuong.Size = new Size(220, 31);
             txtSoLuong.TabIndex = 23;
             // 
             // txtMaSanPham
             // 
-            txtMaSanPham.Location = new Point(156, 40);
+            txtMaSanPham.Location = new Point(164, 64);
             txtMaSanPham.Name = "txtMaSanPham";
             txtMaSanPham.Size = new Size(220, 31);
             txtMaSanPham.TabIndex = 22;
@@ -153,7 +165,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(6, 40);
+            label4.Location = new Point(6, 64);
             label4.Name = "label4";
             label4.Size = new Size(129, 25);
             label4.TabIndex = 21;
@@ -161,7 +173,7 @@
             // 
             // btnLuu
             // 
-            btnLuu.Location = new Point(837, 204);
+            btnLuu.Location = new Point(949, 226);
             btnLuu.Name = "btnLuu";
             btnLuu.Size = new Size(94, 34);
             btnLuu.TabIndex = 20;
@@ -171,7 +183,7 @@
             // 
             // txtMoTa
             // 
-            txtMoTa.Location = new Point(485, 37);
+            txtMoTa.Location = new Point(717, 53);
             txtMoTa.Multiline = true;
             txtMoTa.Name = "txtMoTa";
             txtMoTa.Size = new Size(259, 65);
@@ -180,7 +192,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(406, 48);
+            label6.Location = new Point(638, 64);
             label6.Name = "label6";
             label6.Size = new Size(73, 25);
             label6.TabIndex = 16;
@@ -188,7 +200,7 @@
             // 
             // btnLamMoi
             // 
-            btnLamMoi.Location = new Point(727, 204);
+            btnLamMoi.Location = new Point(839, 226);
             btnLamMoi.Name = "btnLamMoi";
             btnLamMoi.Size = new Size(94, 34);
             btnLamMoi.TabIndex = 15;
@@ -198,7 +210,7 @@
             // 
             // btnXoa
             // 
-            btnXoa.Location = new Point(617, 204);
+            btnXoa.Location = new Point(729, 226);
             btnXoa.Name = "btnXoa";
             btnXoa.Size = new Size(94, 34);
             btnXoa.TabIndex = 14;
@@ -208,7 +220,7 @@
             // 
             // btnSua
             // 
-            btnSua.Location = new Point(507, 204);
+            btnSua.Location = new Point(619, 226);
             btnSua.Name = "btnSua";
             btnSua.Size = new Size(94, 34);
             btnSua.TabIndex = 13;
@@ -218,7 +230,7 @@
             // 
             // btnThem
             // 
-            btnThem.Location = new Point(397, 204);
+            btnThem.Location = new Point(509, 226);
             btnThem.Name = "btnThem";
             btnThem.Size = new Size(94, 34);
             btnThem.TabIndex = 12;
@@ -228,28 +240,28 @@
             // 
             // txtDonGia
             // 
-            txtDonGia.Location = new Point(156, 134);
+            txtDonGia.Location = new Point(164, 144);
             txtDonGia.Name = "txtDonGia";
             txtDonGia.Size = new Size(220, 31);
             txtDonGia.TabIndex = 9;
             // 
             // txtTenSanPham
             // 
-            txtTenSanPham.Location = new Point(156, 87);
+            txtTenSanPham.Location = new Point(164, 103);
             txtTenSanPham.Name = "txtTenSanPham";
             txtTenSanPham.Size = new Size(220, 31);
             txtTenSanPham.TabIndex = 8;
             // 
             // txtHinhAnh
             // 
-            txtHinhAnh.Location = new Point(485, 130);
+            txtHinhAnh.Location = new Point(717, 165);
             txtHinhAnh.Name = "txtHinhAnh";
             txtHinhAnh.Size = new Size(153, 31);
             txtHinhAnh.TabIndex = 7;
             // 
             // btnChonAnh
             // 
-            btnChonAnh.Location = new Point(644, 127);
+            btnChonAnh.Location = new Point(876, 162);
             btnChonAnh.Name = "btnChonAnh";
             btnChonAnh.Size = new Size(100, 34);
             btnChonAnh.TabIndex = 5;
@@ -260,7 +272,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(406, 133);
+            label5.Location = new Point(638, 168);
             label5.Name = "label5";
             label5.Size = new Size(53, 25);
             label5.TabIndex = 4;
@@ -278,7 +290,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(6, 138);
+            label2.Location = new Point(6, 146);
             label2.Name = "label2";
             label2.Size = new Size(84, 25);
             label2.TabIndex = 1;
@@ -287,7 +299,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(5, 89);
+            label1.Location = new Point(5, 105);
             label1.Name = "label1";
             label1.Size = new Size(130, 25);
             label1.TabIndex = 0;
@@ -301,7 +313,7 @@
             dgvSanPham.Name = "dgvSanPham";
             dgvSanPham.RowHeadersWidth = 62;
             dgvSanPham.RowTemplate.Height = 33;
-            dgvSanPham.Size = new Size(937, 218);
+            dgvSanPham.Size = new Size(1418, 351);
             dgvSanPham.TabIndex = 0;
             dgvSanPham.CellClick += dgvSanPham_CellContentClick;
             dgvSanPham.CellContentClick += dgvSanPham_CellContentClick;
@@ -312,9 +324,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(splitContainer1);
             Name = "UC_QuanLySanPham";
-            Size = new Size(1157, 587);
+            Size = new Size(1418, 778);
             Load += UC_QuanLySanPham_Load_1;
             splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
@@ -351,5 +364,6 @@
         private ComboBox cbMaDanhMuc;
         private Label label7;
         private DataGridView dgvSanPham;
+        private Label label8;
     }
 }

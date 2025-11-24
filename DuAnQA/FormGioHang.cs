@@ -21,15 +21,27 @@ namespace DuAnQA
         {
             InitializeComponent();
 
-            // Khởi tạo labelTrống
+            // Giữ nguyên kích thước form như bạn thiết kế (hoặc set cứng nếu cần)
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.MaximizeBox = false; // Không cho phóng to để giữ giao diện gọn
+
+            // --- CẤU HÌNH THANH TRƯỢT ---
+            flowGioHang.AutoScroll = true; // BẬT THANH TRƯỢT
+            flowGioHang.FlowDirection = FlowDirection.TopDown; // Xếp theo chiều dọc
+            flowGioHang.WrapContents = false; // Không cho xuống dòng ngang
+
+            // Neo panel để nó luôn bám theo kích thước form
+            flowGioHang.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+            // Label trống (giữ nguyên)
             LabelTrong = new Label();
             LabelTrong.Text = "🛒 Giỏ hàng của bạn đang trống!";
             LabelTrong.Font = new Font("Segoe UI", 14, FontStyle.Italic);
             LabelTrong.ForeColor = Color.Gray;
             LabelTrong.TextAlign = ContentAlignment.MiddleCenter;
             LabelTrong.AutoSize = false;
-            // Đặt kích thước cho label (thay 800 bằng chiều rộng của flowGioHang)
-            LabelTrong.Size = new Size(800, 100);
+            LabelTrong.Dock = DockStyle.Top;
+            LabelTrong.Height = 100;
         }
 
         private void FormGioHang_Load(object sender, EventArgs e)
@@ -43,24 +55,48 @@ namespace DuAnQA
             flowGioHang.Controls.Clear();
             decimal tongTien = 0;
 
-            // Kiểm tra giỏ hàng trống TRƯỚC
+            // --- TRƯỜNG HỢP 1: GIỎ HÀNG TRỐNG ---
             if (StaticData.DanhSachGioHang.Count == 0)
             {
-                flowGioHang.Controls.Add(LabelTrong);
+                // 1. Tắt thanh trượt
+                flowGioHang.AutoScroll = false;
+
+                Label lblTrong = new Label();
+                lblTrong.Text = "Giỏ hàng của bạn đang trống !";
+                lblTrong.Font = new Font("Segoe UI", 16, FontStyle.Bold);
+                lblTrong.ForeColor = Color.Silver;
+
+                // 2. Cấu hình để căn giữa tuyệt đối
+                lblTrong.AutoSize = false;
+                lblTrong.TextAlign = ContentAlignment.MiddleCenter; // Căn chữ vào giữa Label
+
+                // 3. Set kích thước Label BẰNG ĐÚNG kích thước khung chứa
+                // (Trừ đi 2px để tránh bị viền chèn ép)
+                lblTrong.Width = flowGioHang.ClientSize.Width - 2;
+                lblTrong.Height = flowGioHang.ClientSize.Height - 2;
+
+                // 4. Xóa Margin để không bị lệch
+                lblTrong.Margin = new Padding(0);
+
+                flowGioHang.Controls.Add(lblTrong);
                 lblTongTien.Text = "Tổng tiền: 0 VNĐ";
                 return;
             }
 
-            // Nếu không trống, hiển thị sản phẩm
+            // --- TRƯỜNG HỢP 2: CÓ SẢN PHẨM (Code bên dưới giữ nguyên) ---
+            flowGioHang.AutoScroll = true;
+            int w = flowGioHang.ClientSize.Width - 40;
+
             foreach (var sp in StaticData.DanhSachGioHang)
             {
                 Panel pnl = new Panel();
-                pnl.Width = 600; // Tăng chiều rộng để chứa nút Xóa
+                pnl.Width = w;  // Chiều rộng tự động co giãn theo khung
                 pnl.Height = 120;
                 pnl.BorderStyle = BorderStyle.FixedSingle;
-                pnl.Margin = new Padding(100, 5, 5, 5); // Giảm margin trái 1 chút
+                pnl.BackColor = Color.White;
+                pnl.Margin = new Padding(5); // Khoảng cách giữa các ô
 
-                // Ảnh (Sửa lỗi khóa file)
+                // 1. Ảnh
                 PictureBox pic = new PictureBox();
                 pic.SizeMode = PictureBoxSizeMode.Zoom;
                 if (!string.IsNullOrEmpty(sp.HinhAnh))
@@ -68,85 +104,87 @@ namespace DuAnQA
                     string path = Path.Combine(Application.StartupPath, sp.HinhAnh);
                     if (File.Exists(path))
                     {
-                        // Dùng MemoryStream để tránh lỗi khóa file
-                        byte[] imageData = File.ReadAllBytes(path);
-                        using (MemoryStream ms = new MemoryStream(imageData))
-                        {
-                            pic.Image = Image.FromStream(ms);
-                        }
+                        byte[] imgBytes = File.ReadAllBytes(path);
+                        using (MemoryStream ms = new MemoryStream(imgBytes)) pic.Image = Image.FromStream(ms);
                     }
                 }
-                pic.Width = 100;
-                pic.Height = 100;
-                pic.Left = 10;
-                pic.Top = 10;
+                pic.Width = 100; pic.Height = 100;
+                pic.Left = 10; pic.Top = 10;
 
-                // Tên sản phẩm
+                // 2. Thông tin (Tên, Size, SL, Giá)
+                // Cố định vị trí bên trái
+                int leftInfo = 120;
+
+                // Tên SP
                 Label lblTen = new Label();
                 lblTen.Text = sp.TenSP;
                 lblTen.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-                lblTen.Left = 120;
-                lblTen.Top = 10;
                 lblTen.AutoSize = true;
+                lblTen.Left = leftInfo; lblTen.Top = 10;
 
-                // <<< SỬA 1: Dùng ComboBox cho Size >>>
+                // ComboBox Size
                 ComboBox cboSize = new ComboBox();
-                cboSize.Items.AddRange(new[] { "S", "M", "L" });
+                cboSize.Items.AddRange(new[] { "S", "M", "L", "XL" });
                 cboSize.SelectedItem = sp.Size;
-                cboSize.Left = 120;
-                cboSize.Top = 40;
-                cboSize.Width = 70;
+                cboSize.Width = 50;
                 cboSize.DropDownStyle = ComboBoxStyle.DropDownList;
-                cboSize.Tag = sp; // Gán đối tượng sp vào Tag để biết đang sửa item nào
+                cboSize.Left = leftInfo; cboSize.Top = 40;
+                cboSize.Tag = sp;
                 cboSize.SelectedIndexChanged += new EventHandler(cboSize_SelectedIndexChanged);
 
-                // <<< SỬA 2: Dùng NumericUpDown cho Số lượng >>>
+                // Numeric Số lượng
                 NumericUpDown numSL = new NumericUpDown();
-                numSL.Value = sp.SoLuong;
-                numSL.Minimum = 1;
-                numSL.Maximum = 99; // Giới hạn max, hoặc bạn có thể truy vấn số lượng tồn kho
-                numSL.Left = 200;
-                numSL.Top = 40;
+                numSL.Value = sp.SoLuong; numSL.Minimum = 1; numSL.Maximum = 99;
                 numSL.Width = 50;
-                numSL.Tag = sp; // Gán đối tượng sp vào Tag
+                numSL.Left = leftInfo + 60; numSL.Top = 40;
+                numSL.Tag = sp;
                 numSL.ValueChanged += new EventHandler(numSL_ValueChanged);
 
                 // Đơn giá
                 Label lblGia = new Label();
-                lblGia.Text = "Giá: " + sp.Gia.ToString("N0") + " VNĐ";
-                lblGia.Left = 120;
-                lblGia.Top = 70;
+                lblGia.Text = "Giá: " + sp.Gia.ToString("N0");
+                lblGia.ForeColor = Color.Gray;
                 lblGia.AutoSize = true;
+                lblGia.Left = leftInfo; lblGia.Top = 75;
 
-                // Thành tiền
-                Label lblThanhTien = new Label();
-                lblThanhTien.Text = "Thành tiền: " + sp.ThanhTien.ToString("N0") + " VNĐ";
-                lblThanhTien.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-                lblThanhTien.ForeColor = Color.DarkRed;
-                lblThanhTien.Left = 300;
-                lblThanhTien.Top = 70;
-                lblThanhTien.AutoSize = true;
+                // --- 3. CỤM BÊN PHẢI (NÚT XÓA & THÀNH TIỀN) ---
+                // Neo vị trí dựa trên pnl.Width để luôn nằm sát lề phải dù form to hay nhỏ
 
-                tongTien += sp.ThanhTien;
-
-                // <<< SỬA 3: Thêm Nút Xóa >>>
+                // Nút Xóa
                 Button btnXoa = new Button();
                 btnXoa.Text = "Xóa";
                 btnXoa.BackColor = Color.Pink;
-                btnXoa.Left = 520; // Đặt ở góc phải panel
-                btnXoa.Top = 35;
-                btnXoa.Width = 70;
-                btnXoa.Height = 40;
-                btnXoa.Tag = sp; // Gán đối tượng sp vào Tag
+                btnXoa.FlatStyle = FlatStyle.Flat;
+                btnXoa.FlatAppearance.BorderSize = 0;
+                btnXoa.Width = 60; btnXoa.Height = 30;
+                // Công thức: Chiều rộng Panel - Chiều rộng nút - 10px lề
+                btnXoa.Left = pnl.Width - 90;
+                btnXoa.Top = 40;
+                btnXoa.Tag = sp;
                 btnXoa.Click += new EventHandler(btnXoa_Click);
+
+                // Thành tiền
+                Label lblThanhTien = new Label();
+                lblThanhTien.Text = "Thành tiền:\n" + sp.ThanhTien.ToString("N0") + " VNĐ";
+                lblThanhTien.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+                lblThanhTien.ForeColor = Color.DarkRed;
+                lblThanhTien.TextAlign = ContentAlignment.MiddleRight; // Căn chữ sang phải
+                lblThanhTien.AutoSize = false;
+                lblThanhTien.Width = 200;
+                lblThanhTien.Height = 60;
+                // Công thức: Chiều rộng Panel - Chiều rộng Label - 10px lề
+                lblThanhTien.Left = 350;
+                lblThanhTien.Top = 45;
+
+                tongTien += sp.ThanhTien;
 
                 pnl.Controls.Add(pic);
                 pnl.Controls.Add(lblTen);
-                pnl.Controls.Add(cboSize); // Thêm cboSize (thay cho lblSize)
-                pnl.Controls.Add(numSL);   // Thêm numSL (thay cho lblSL)
+                pnl.Controls.Add(cboSize);
+                pnl.Controls.Add(numSL);
                 pnl.Controls.Add(lblGia);
+                pnl.Controls.Add(btnXoa);
                 pnl.Controls.Add(lblThanhTien);
-                pnl.Controls.Add(btnXoa);  // Thêm btnXoa
 
                 flowGioHang.Controls.Add(pnl);
             }
@@ -155,65 +193,39 @@ namespace DuAnQA
         }
         private void numSL_ValueChanged(object sender, EventArgs e)
         {
-            // 1. Lấy control và đối tượng sp từ Tag
             NumericUpDown num = (NumericUpDown)sender;
             GioHang item = (GioHang)num.Tag;
-
-            // 2. Cập nhật số lượng trong giỏ hàng tĩnh
             item.SoLuong = (int)num.Value;
-
-            // 3. Tải lại toàn bộ giỏ hàng để cập nhật thành tiền và tổng tiền
             HienThiGioHang();
         }
 
         // --- SỰ KIỆN KHI THAY ĐỔI SIZE ---
         private void cboSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // 1. Lấy control và đối tượng sp từ Tag
             ComboBox cbo = (ComboBox)sender;
             GioHang item = (GioHang)cbo.Tag;
-
-            // 2. Cập nhật size
             item.Size = cbo.Text;
-
-            // 3. Tải lại giỏ hàng
             HienThiGioHang();
         }
 
         // --- SỰ KIỆN KHI BẤM NÚT XÓA ---
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            // 1. Lấy control và đối tượng sp từ Tag
             Button btn = (Button)sender;
             GioHang item = (GioHang)btn.Tag;
-
-            var result = MessageBox.Show($"Bạn có chắc muốn xóa {item.TenSP} khỏi giỏ hàng?", "Xác nhận", MessageBoxButtons.YesNo);
-
+            var result = MessageBox.Show($"Xóa {item.TenSP}?", "Xác nhận", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-                // 2. Xóa khỏi giỏ hàng tĩnh
                 StaticData.DanhSachGioHang.Remove(item);
-
-                // 3. Tải lại giỏ hàng
                 HienThiGioHang();
             }
         }
 
         private void btnQuayLai_Click(object sender, EventArgs e)
         {
-            // Kiểm tra cờ
-            if (this.daThanhToanThanhCong)
-            {
-                // Nếu đã mua, gửi tín hiệu OK
-                this.DialogResult = DialogResult.OK;
-            }
-            else
-            {
-                // Nếu không, gửi tín hiệu Cancel
-                this.DialogResult = DialogResult.Cancel;
-            }
-
-            this.Close(); // Đóng form
+            if (this.daThanhToanThanhCong) this.DialogResult = DialogResult.OK;
+            else this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         // ==========================================================

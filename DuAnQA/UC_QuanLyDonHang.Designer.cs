@@ -42,11 +42,12 @@
             // dgvDonHang
             // 
             dgvDonHang.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvDonHang.Location = new Point(15, 30);
+            dgvDonHang.Dock = DockStyle.Fill;
+            dgvDonHang.Location = new Point(3, 27);
             dgvDonHang.Name = "dgvDonHang";
             dgvDonHang.RowHeadersWidth = 62;
             dgvDonHang.RowTemplate.Height = 33;
-            dgvDonHang.Size = new Size(845, 173);
+            dgvDonHang.Size = new Size(1249, 361);
             dgvDonHang.TabIndex = 0;
             dgvDonHang.CellClick += dgvDonHang_CellContentClick;
             dgvDonHang.CellContentClick += dgvDonHang_CellContentClick;
@@ -58,15 +59,16 @@
             dgvChiTiet.Name = "dgvChiTiet";
             dgvChiTiet.RowHeadersWidth = 62;
             dgvChiTiet.RowTemplate.Height = 33;
-            dgvChiTiet.Size = new Size(845, 161);
+            dgvChiTiet.Size = new Size(1225, 413);
             dgvChiTiet.TabIndex = 1;
+            dgvChiTiet.CellContentClick += dgvChiTiet_CellContentClick;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 18F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = Color.DimGray;
-            label1.Location = new Point(316, 20);
+            label1.Location = new Point(575, 24);
             label1.Name = "label1";
             label1.Size = new Size(295, 41);
             label1.TabIndex = 2;
@@ -77,7 +79,7 @@
             groupBox1.Controls.Add(dgvDonHang);
             groupBox1.Location = new Point(28, 78);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(875, 209);
+            groupBox1.Size = new Size(1255, 391);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "Danh sách Đơn hàng";
@@ -85,9 +87,9 @@
             // groupBox2
             // 
             groupBox2.Controls.Add(dgvChiTiet);
-            groupBox2.Location = new Point(28, 293);
+            groupBox2.Location = new Point(28, 475);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(875, 197);
+            groupBox2.Size = new Size(1255, 267);
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             groupBox2.Text = "Chi tiết Đơn hàng";
@@ -101,7 +103,7 @@
             Controls.Add(groupBox1);
             Controls.Add(label1);
             Name = "UC_QuanLyDonHang";
-            Size = new Size(937, 490);
+            Size = new Size(1418, 778);
             Load += UC_QuanLyDonHang_Load;
             ((System.ComponentModel.ISupportInitialize)dgvDonHang).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvChiTiet).EndInit();

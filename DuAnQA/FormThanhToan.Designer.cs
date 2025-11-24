@@ -135,7 +135,9 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(picQR);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormThanhToan";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FormThanhToan";
             Load += FormThanhToan_Load;
             ((System.ComponentModel.ISupportInitialize)picQR).EndInit();
